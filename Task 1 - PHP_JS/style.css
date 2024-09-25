@@ -1,0 +1,57 @@
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: #2196f3;
+  padding: 5px;
+}
+
+.cell {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  font-size: 20px;
+  text-align: center;
+  cursor: move;
+}
+
+.cell:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.cell::before,
+.cell::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  opacity: 0.7;
+  width: 20%;
+  pointer-events: none;
+  transition: background-color 0.2s;
+}
+
+.cell::before {
+  left: 0;
+}
+
+.cell::after {
+  right: 0;
+}
+
+.cell.over-left::before,
+.cell.over-right::after {
+  background-color: black;
+}
+
+/* .cell.over-right::after {
+  background-color: lightgreen;
+} */
+
+.dragging {
+  opacity: 0.2;
+}
