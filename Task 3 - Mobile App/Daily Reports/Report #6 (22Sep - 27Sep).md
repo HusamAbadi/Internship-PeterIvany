@@ -28,3 +28,7 @@
 # Day 35 (26th September): 
     I updated the wireframe furthurmore according to The professor's furthur feedback.
     I updated the ER Diagram according to The professor's  feedback by adding order feilds to multiple entities and creating a new Affiliations Table with many-to-many relationship with Author Table.
+
+# Day 36 (27th September): 
+    I didn't do mutch that day.
+    I continued trying to fix the configuration error of setting up the firebase.
