@@ -1,24 +1,26 @@
+import 'package:conference_management_system/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  // [_] means the object is private
+  // Private FirebaseAuth instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // sign in anonymously
-  Future signInAnon() async {
+  // Create custom user object based on Firebase User object
+  AppUser? _userFromFirebaseUser(User? user) {
+    return user != null ? AppUser(uid: user.uid) : null;
+  }
+
+  // Sign in anonymously
+  Future<AppUser?> signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      User user = result.user as User;
-      return user;
+      User? user = result.user;
+      return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  //sign in with email & password
-
-  //register with email & password
-
-  // sign out
+  // Other authentication methods (sign in, register, sign out) can be added here
 }

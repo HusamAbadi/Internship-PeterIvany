@@ -1,3 +1,4 @@
+import 'package:conference_management_system/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Authentiacte extends StatefulWidget {
@@ -12,7 +13,7 @@ class _AuthentiacteState extends State<Authentiacte> {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return Container(
-      child: Text('authenticate'),
+      child: const SignIn(),
     );
   }
 }

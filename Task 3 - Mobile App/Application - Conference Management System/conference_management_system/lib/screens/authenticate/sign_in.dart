@@ -1,3 +1,4 @@
+import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -8,6 +9,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,13 +18,21 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign in to the system'),
+        title: const Text('Sign in to the system'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: ElevatedButton(
-          child: Text('Sign in anon'),
-          onPressed: () async {},
+          child: const Text('Sign in anon'),
+          onPressed: () async {
+            dynamic result = await _auth.signInAnon();
+            if (result == null) {
+              print('Error Occured');
+            } else {
+              print('signed in');
+              print(result.uid);
+            }
+          },
         ),
       ),
     );
