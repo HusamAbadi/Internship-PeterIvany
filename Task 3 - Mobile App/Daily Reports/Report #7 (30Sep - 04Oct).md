@@ -24,3 +24,5 @@
 
         3- Implementing Real-Time Authentication Change Handler
             I also focused on implementing a real-time authentication change listener in our Flutter application. The goal was to enable dynamic UI updates based on whether the user is signed in or not. This was achieved using Firebase’s authentication stream, allowing the app to respond to sign-in and sign-out events in real-time.
+
+        4- Creating rout files for the main three routs: Conferences, Authors and Keywords.

@@ -1,3 +1,4 @@
+import 'package:conference_management_system/screens/home/home.dart';
 import 'package:conference_management_system/screens/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Wrapper(),
+      home: Home(),
+      // home: Wrapper(),
       // home: Scaffold(
       //   backgroundColor: const Color.fromARGB(255, 233, 233, 233),
       //   body: SafeArea(
