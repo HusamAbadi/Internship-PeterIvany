@@ -2,7 +2,11 @@ import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  // Constructer
+  final Function toggleView;
+  SignIn({required this.toggleView});
+
+  // const SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -28,7 +32,7 @@ class _SignInState extends State<SignIn> {
               icon: Icon(Icons.person),
               label: Text("Register"),
               onPressed: () async {
-                
+                widget.toggleView();
               },
             )
           ]),
