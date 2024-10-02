@@ -28,11 +28,22 @@ class AuthService {
     }
   }
 
-  // Other authentication methods (sign in, register, sign out) can be added here
+  // *Other authentication methods (sign in, register, sign out) can be added here
 
   //sign in with email & password
 
   // register with email & password
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   // sign out
   Future signOut() async {

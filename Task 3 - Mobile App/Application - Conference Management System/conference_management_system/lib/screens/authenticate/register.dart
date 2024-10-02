@@ -14,10 +14,13 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<
+      FormState>(); //we wil use this global key To identify, track the state and validate our form
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +42,26 @@ class _RegisterState extends State<Register> {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
-              TextFormField(onChanged: (val) {
-                setState(() => {email = val});
-              }),
+              TextFormField(
+                  validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                  onChanged: (val) {
+                    setState(() => {email = val});
+                  }),
               SizedBox(height: 20.0),
               TextFormField(
                 obscureText: true,
+                validator: (val) =>
+                    val!.length < 6 ? 'Minimum 6 characters' : null,
                 onChanged: (val) {
                   setState(() => {password = val});
                 },
               ),
               SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () async {
-                  print(email);
-                  print(password);
-                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue[200]),
                 child: const Text(
@@ -65,6 +69,20 @@ class _RegisterState extends State<Register> {
                   style: TextStyle(
                       color: Colors.white), // Set the text color to white
                 ),
+                onPressed: () async {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    dynamic result = await _auth.registerWithEmailAndPassword(
+                        email, password);
+                    if (result == null) {
+                      setState(() => error = 'please supply a vaild email');
+                    }
+                  }
+                },
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
               )
             ],
           ),
