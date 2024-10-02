@@ -1,17 +1,35 @@
 import 'package:conference_management_system/screens/home/conferences_screen.dart';
 import 'package:conference_management_system/screens/home/authors_screen.dart';
 import 'package:conference_management_system/screens/home/keywords_screen.dart';
+import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: Wrapper(),
       home: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 233, 233, 233),
+        backgroundColor: Colors.amber[100],
+        appBar: AppBar(
+          title: Text("Conference Management System"),
+          titleTextStyle: TextStyle(fontSize: 16),
+          backgroundColor: Colors.amber[400],
+          elevation: 0.0,
+          actions: <Widget>[
+            TextButton.icon(
+              icon: Icon(Icons.person),
+              label: Text("logout"),
+              onPressed: () async {
+                await _auth.signOut();
+              },
+            )
+          ],
+        ),
         body: SafeArea(
           child: Center(
             child: Column(

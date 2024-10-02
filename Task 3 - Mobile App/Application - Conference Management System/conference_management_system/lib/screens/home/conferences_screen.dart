@@ -9,7 +9,7 @@ class ConferencesScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          'Welcome to the Conferences Screen',
+          'Welcome to Conferences',
           style: TextStyle(fontSize: 24),
         ),
       ),

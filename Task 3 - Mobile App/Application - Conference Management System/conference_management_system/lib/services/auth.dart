@@ -29,4 +29,20 @@ class AuthService {
   }
 
   // Other authentication methods (sign in, register, sign out) can be added here
+
+  //sign in with email & password
+
+  // register with email & password
+
+  // sign out
+  Future signOut() async {
+    // The outer signOut() Method is user-defined
+    try {
+      return await _auth.signOut();
+      // The inner signOut() Method is built-in within Firebase Auth Library
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

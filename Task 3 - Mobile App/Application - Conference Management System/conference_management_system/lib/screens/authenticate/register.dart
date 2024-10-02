@@ -1,14 +1,14 @@
 import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
 
   // text field state
@@ -20,18 +20,10 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.amber[100],
       appBar: AppBar(
-          backgroundColor: Colors.amber[400],
-          elevation: 0.0,
-          title: const Text('Sign in to the system'),
-          actions: <Widget>[
-            TextButton.icon(
-              icon: Icon(Icons.person),
-              label: Text("Register"),
-              onPressed: () async {
-                
-              },
-            )
-          ]),
+        backgroundColor: Colors.amber[400],
+        elevation: 0.0,
+        title: const Text('Sign up to the system'),
+      ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: Form(
@@ -57,7 +49,7 @@ class _SignInState extends State<SignIn> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue[200]),
                 child: const Text(
-                  'Sign In',
+                  'Register',
                   style: TextStyle(
                       color: Colors.white), // Set the text color to white
                 ),

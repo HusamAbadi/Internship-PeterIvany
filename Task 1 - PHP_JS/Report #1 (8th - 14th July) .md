@@ -1,6 +1,6 @@
 Daily Report of Tasks
 
-Day #1 (July 8th):
+# Day #1 (July 8th):
 
 - Meeting and Internship Offer:
   - Met with Professor Peter Ivany and secured an internship.
@@ -8,7 +8,7 @@ Day #1 (July 8th):
     - 1- A small PHP and JavaScript task to implement drag-and-drop functionality on a multi-row, multi-column grid template.
     - 2- A long-term learning project focused on topology optimization using MATLAB and CUDA, guided by the book "Programming Massively Parallel Processors."
 
-Days #2-3 (July 9th-10th):
+# Days #2-3 (July 9th-10th):
 
 - Starting the First Task:
 
@@ -35,7 +35,7 @@ Days #2-3 (July 9th-10th):
       - Triggered an update function on the "drop" event.
       - Sent the updated list of items as a JSON object with the current order in a POST request to update the "tag_order" attribute in the tags table.
 
-Day #4 (July 11th):
+# Day #4 (July 11th):
 
 -Bug Fixes and Code Optimization:
 
@@ -43,12 +43,12 @@ Day #4 (July 11th):
   -Removed unused code blocks.
   -Simplified the code for better readability and maintenance.
 
-Day #5 (July 12th - Friday):
+# Day #5 (July 12th - Friday):
 
 -Break Day:
   -Did not work on the project.
 
-Day #6 (July 13th):
+# Day #6 (July 13th):
 
 -Layout and Styling Improvements:
 
@@ -56,7 +56,7 @@ Day #6 (July 13th):
   -Made it easier to shift tag blocks.
   -Adjusted tag cells to have appropriate widths based on text length, instead of having uniform widths.
 
-Day #7 (July 14th):
+# Day #7 (July 14th):
 
 -Final Adjustments and Enhancements:
 

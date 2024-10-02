@@ -1,3 +1,4 @@
+import 'package:conference_management_system/screens/authenticate/register.dart';
 import 'package:conference_management_system/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
