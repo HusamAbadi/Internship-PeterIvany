@@ -62,4 +62,7 @@ Tasks Accomplished:
 
   3- Creating A Loading Widget using Flutter SpinKit Package.
 
+  4- Setting up Firestore Database:
+      I created a new file named 'database' in the services folder which will be used to create and manage our collections and each record in each collection.
+
 # Day 41 (4th October)

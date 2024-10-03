@@ -9,7 +9,7 @@ class KeywordsScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          'Welcome to the Keywords Screen',
+          'Welcome to Keywords',
           style: TextStyle(fontSize: 24),
         ),
       ),
