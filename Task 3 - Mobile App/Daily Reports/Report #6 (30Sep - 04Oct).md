@@ -63,6 +63,9 @@ Tasks Accomplished:
   3- Creating A Loading Widget using Flutter SpinKit Package.
 
   4- Setting up Firestore Database:
-      I created a new file named 'database' in the services folder which will be used to create and manage our collections and each record in each collection.
+    I created a new file named 'database' in the services folder which will be used to create and manage our collections and each record in each collection.
 
+  5- Implementing Firestore User Records for New Users
+    I started on integrating Firestore into the Flutter application to store user-specific data. I created a function that automatically generates a new document in the Firestore collection for each new user upon registration. The goal was to ensure that each user has a dedicated document in the brews collection, which can later be updated based on their preferences.
+    
 # Day 41 (4th October)

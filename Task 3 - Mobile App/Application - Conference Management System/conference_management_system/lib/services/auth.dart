@@ -1,4 +1,5 @@
 import 'package:conference_management_system/models/user.dart';
+import 'package:conference_management_system/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -49,6 +50,11 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
+
+      // create a new documetn for the user with the uid
+      await DatabaseService(uid: user!.uid)
+          .updateFavoritePapers('Paper title', 'Lorem');
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
