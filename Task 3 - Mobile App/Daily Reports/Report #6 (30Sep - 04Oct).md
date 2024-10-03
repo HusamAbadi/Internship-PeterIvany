@@ -1,5 +1,6 @@
 
-# Day 37 (30th September):
+# Day 37 (30th September)
+
     I completed the firebase setup and now it's ready to be used.
     I brainstormed the structure of the program in which I know how to devide each portion of it. and it goes as follows:
         The app is structured with a root widget MyApp, which has a Wrapper widget beneath it. The Wrapper listens for user authentication changes. Based on the authentication status, it dynamically displays either a home screen (for logged-in users) or an authentication screen (for logged-out users). The home screen lists user data and preferences, while the authentication screen allows switching between sign-in and registration widgets. The Wrapper serves as the central point for managing which screen to display.
@@ -14,7 +15,8 @@
         If the user is logged in, the app displays the HomeScreen widget.
         If the user is logged out, the app shows the Authenticate widget.
 
-# Day 38 (1st October):
+# Day 38 (1st October)
+
     Tasks: 
         1- Implementing Anonymous Sign-In Functionality:
             A new sign-in widget is created as a separate Dart file and incorporated into the app to allow anonymous login. This widget accesses the AuthService class to perform authentication and prints relevant messages to the console based on the outcome. Future improvements will include creating a custom user object to simplify the data structure.
@@ -27,12 +29,12 @@
 
         4- Creating rout files for the main three routs: Conferences, Authors and Keywords.
 
-# Day 39 (2nd October):
+# Day 39 (2nd October)
+
 Tasks Accomplished:
 
   1-State Management with Provider:
     --Integrated Provider for managing user authentication state, ensuring seamless UI updates when the user logs in or out.
-
 
   2-Firebase Email/Password Authentication:
     --Implemented email and password-based registration and sign-in forms, replacing the initial anonymous sign-in approach.
@@ -48,10 +50,16 @@ Tasks Accomplished:
   5-User Feedback:
     --Implemented dynamic error messages for failed registration attempts, providing clear feedback to users.
 
-# Day 40 (3rd October):
+# Day 40 (3rd October)
+
 Tasks Accomplished:
 
-  1- Implementing sign-in functionality, allowing users to log in using their registered email and password. This completes the core authentication flow of the app, paving the way for data integration and UI enhancements.
+  1- Implementing sign-in functionality:
+       allowing users to log in using their registered email and password. This completes the core authentication flow of the app, paving the way for data integration and UI enhancements.
 
+  2- Text Input Decoration:
+    By changing the background color, giving the textFormField widget a border and adding a hint text to each text field.
 
-# Day 41 (4th October):
+  3- Creating A Loading Widget using Flutter SpinKit Package.
+
+# Day 41 (4th October)
