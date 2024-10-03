@@ -49,7 +49,9 @@ Tasks Accomplished:
     --Implemented dynamic error messages for failed registration attempts, providing clear feedback to users.
 
 # Day 40 (3rd October):
+Tasks Accomplished:
 
+  1- Implementing sign-in functionality, allowing users to log in using their registered email and password. This completes the core authentication flow of the app, paving the way for data integration and UI enhancements.
 
 
 # Day 41 (4th October):

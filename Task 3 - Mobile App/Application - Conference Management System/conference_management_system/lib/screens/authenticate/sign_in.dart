@@ -14,10 +14,12 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +41,19 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
-              TextFormField(onChanged: (val) {
-                setState(() => {email = val});
-              }),
+              TextFormField(
+                  validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                  onChanged: (val) {
+                    setState(() => {email = val});
+                  }),
               SizedBox(height: 20.0),
               TextFormField(
+                validator: (val) =>
+                    val!.length < 6 ? 'Minimum 6 characters' : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() => {password = val});
@@ -55,8 +62,12 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState?.validate() ?? false) {
+                    dynamic result =
+                        await _auth.signInWithEmailAndPassword(email, password);
+                    setState(() =>
+                        error = 'could not sign in with those credentials');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlue[200]),
@@ -65,6 +76,11 @@ class _SignInState extends State<SignIn> {
                   style: TextStyle(
                       color: Colors.white), // Set the text color to white
                 ),
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
               )
             ],
           ),
