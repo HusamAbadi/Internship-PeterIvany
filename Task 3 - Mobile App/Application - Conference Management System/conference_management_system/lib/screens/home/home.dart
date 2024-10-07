@@ -1,5 +1,7 @@
 import 'package:conference_management_system/screens/home/conferences_screen.dart';
 import 'package:conference_management_system/screens/home/authors_screen.dart';
+import 'package:conference_management_system/screens/home/favoritePapers.dart';
+import 'package:conference_management_system/screens/home/favorite_papers_list.dart';
 import 'package:conference_management_system/screens/home/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +91,20 @@ class Home extends StatelessWidget {
                         child: const Text("Keywords"),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    // SizedBox(
+                    //   width: 200,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => FavoritePapers()),
+                    //       );
+                    //     },
+                    //     child: const Text("Your Favorite Papers"),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

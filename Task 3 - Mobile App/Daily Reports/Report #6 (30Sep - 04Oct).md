@@ -69,3 +69,32 @@ Tasks Accomplished:
     I started on integrating Firestore into the Flutter application to store user-specific data. I created a function that automatically generates a new document in the Firestore collection for each new user upon registration. The goal was to ensure that each user has a dedicated document in the brews collection, which can later be updated based on their preferences.
     
 # Day 41 (4th October)
+
+  Task: Setting up Firestore Stream to Display User Data:
+    Today, I focused on setting up a Firestore stream in the Flutter application to monitor changes in the brews collection and dynamically display user data on the home screen.
+
+  Steps Taken:
+
+    -Cleaning Up Existing Data:
+      --Deleted all previously created user records from Firebase Authentication, keeping only the latest registered user for testing.
+
+    -Setting Up Firestore Stream:
+      --Implemented a Firestore stream in the DatabaseService class to listen for changes in the brews collection.
+      --Configured the stream to notify the app whenever there are changes, such as new documents added or updates to existing ones.
+      --Used the .snapshots() method to create a stream of snapshots that reflect the current state of the collection.
+
+    -Integrating Firestore Stream with Provider:
+      --Wrapped the home screen widget in a StreamProvider to listen to the brews collection stream.
+      --Linked the stream to the StreamProvider in the home screen, making the Firestore data accessible to descendant widgets.
+
+    -Creating the Brew List Widget:
+      --Developed a BrewList widget to display data retrieved from Firestore.
+      --Implemented logic to cycle through the documents in the brews collection and print their data to the console for verification.
+      --Verified that each user’s document data (e.g., sugar preference, strength) is displayed correctly based on the current state of the Firestore collection.
+
+    -Testing and Troubleshooting:
+      --Registered new users and observed how the Firestore stream responded by dynamically adding new documents to the brews collection.
+      --Debugged issues related to null values and missing documents to ensure smooth data retrieval and display.
+
+  Outcome: 
+    Successfully set up a Firestore stream to monitor real-time changes in the brews collection. The stream updates the app dynamically, allowing for accurate display of user-specific data. This foundation will be used to further enhance the UI by mapping Firestore snapshots to custom objects in future iterations.

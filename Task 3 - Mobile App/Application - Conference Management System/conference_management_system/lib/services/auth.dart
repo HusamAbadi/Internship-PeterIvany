@@ -29,9 +29,9 @@ class AuthService {
     }
   }
 
-  // *Other authentication methods (sign in, register, sign out) can be added here
+  // *Other authentication methods (sign in, register, sign out)
 
-  //sign in with email & password
+  //*sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -44,7 +44,7 @@ class AuthService {
     }
   }
 
-  // register with email & password
+  //* register with email & password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -52,8 +52,7 @@ class AuthService {
       User? user = result.user;
 
       // create a new documetn for the user with the uid
-      await DatabaseService(uid: user!.uid)
-          .updateFavoritePapers('Paper title', 'Lorem');
+      await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
 
       return _userFromFirebaseUser(user);
     } catch (e) {
