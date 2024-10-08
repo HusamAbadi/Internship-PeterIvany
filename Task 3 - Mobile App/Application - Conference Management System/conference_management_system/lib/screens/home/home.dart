@@ -1,7 +1,5 @@
 import 'package:conference_management_system/screens/home/conferences_screen.dart';
 import 'package:conference_management_system/screens/home/authors_screen.dart';
-import 'package:conference_management_system/screens/home/favoritePapers.dart';
-import 'package:conference_management_system/screens/home/favorite_papers_list.dart';
 import 'package:conference_management_system/screens/home/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +55,8 @@ class Home extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ConferencesScreen()),
+                                builder: (context) =>
+                                    const ConferencesScreen()),
                           );
                         },
                         child: const Text("Conferences"),

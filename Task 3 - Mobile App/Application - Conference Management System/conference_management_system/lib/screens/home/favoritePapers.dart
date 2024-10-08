@@ -9,7 +9,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return StreamProvider<QuerySnapshot?>.value(
-//         value: DatabaseService(uid: 'uid').favoritePapers,
+//         value: DatabaseService(uid: 'uid').conferences(),
 //         initialData: null,
 //         child: Scaffold(
 //           appBar: AppBar(

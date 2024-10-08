@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conference_management_system/screens/home/favoritePapers.dart';
 
 class DatabaseService {
   final String uid;
@@ -25,12 +24,12 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('persons');
 
   //* Streams
-  Stream<DocumentSnapshot> get collections {
-    return usersCollection.doc(uid).snapshots();
+  Stream<QuerySnapshot<Object?>> get conferences {
+    return conferencesCollection.snapshots();
   }
 
   Stream<DocumentSnapshot> get sessions {
-    return usersCollection.doc(uid).snapshots();
+    return sessionsCollection.doc(uid).snapshots();
   }
 
   Stream<DocumentSnapshot> get users {
@@ -38,15 +37,15 @@ class DatabaseService {
   }
 
   Stream<DocumentSnapshot> get papers {
-    return usersCollection.doc(uid).snapshots();
+    return papersCollection.doc(uid).snapshots();
   }
 
   Stream<DocumentSnapshot> get keywords {
-    return usersCollection.doc(uid).snapshots();
+    return keywordsCollection.doc(uid).snapshots();
   }
 
   Stream<DocumentSnapshot> get persons {
-    return usersCollection.doc(uid).snapshots();
+    return personsCollection.doc(uid).snapshots();
   }
 
   /// Adds a favorite paper to the user's document.
