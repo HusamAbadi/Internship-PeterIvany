@@ -54,6 +54,8 @@ class DatabaseService {
           id: doc.id,
           name: data['name'] ?? '',
           location: data['location'] ?? '',
+          startDate: (data['startDate'] as Timestamp).toDate(),
+          endDate: (data['endDate'] as Timestamp).toDate(),
           days: data['days'] ?? []);
     }).toList();
   }

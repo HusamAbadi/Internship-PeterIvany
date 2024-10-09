@@ -39,3 +39,25 @@
         -Refactoring Conference List Widget.
 
 # Day 44 (9th October): 
+
+    Task: Displaying Conference Data in the Application using ListView
+
+    Description: Today, I focused on rendering the Conference data obtained from Firestore into the UI of the Flutter application. This was accomplished by utilizing a ListView.builder widget to iterate through a list of Conference objects and displaying each entry in a customized tile format.
+
+    Steps Taken:
+        -Implementing ListView Builder:
+            --Replaced the static container with a ListView.builder widget to dynamically render a list of Conference objects.
+            --Configured the ListView.builder with the appropriate item count (conferences.length) and an item builder function to construct each list item based on its index.
+
+        -Creating the ConferencesTile Widget:
+            --Developed a custom widget named ConferencesTile to display the conference properties (name, location, start and end dates).
+
+        -The ConferencesTile widget includes:
+            --CircleAvatar: For Displaying a picture regarding the conference.
+            --Title Text: Displays the name of the conference.
+            --Subtitle Text: Displays location of the conference.
+            --This structure allows each ConferencesTile to visually represent a single Conference object in the list.
+
+        -Connecting the ConferencesTile to the Conference List:
+            --The ConferencesTile widget was integrated into the ConferencesList widget, where each item in the list is passed as a Conference object to ConferencesTile.
+            --This ensures each ConferencesTile is populated with the correct data from Firestore, providing a neat display of the conference preferences.
