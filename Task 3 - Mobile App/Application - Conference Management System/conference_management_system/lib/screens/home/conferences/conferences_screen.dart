@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conference_management_system/screens/home/lists/conferences_list.dart';
+import 'package:conference_management_system/models/conference.dart';
+import 'package:conference_management_system/screens/home/conferences/conferences_list.dart';
 import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,7 @@ class ConferencesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot?>.value(
+    return StreamProvider<List<Conference>?>.value(
         value: DatabaseService(uid: 'uid').conferences,
         initialData: null,
         child: Scaffold(
@@ -24,6 +24,7 @@ class ConferencesScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 24),
                 ),
               ),
+              SizedBox(height: 40.0),
               ConferencesList(),
             ],
           ),

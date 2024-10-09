@@ -1,5 +1,5 @@
+import 'package:conference_management_system/models/conference.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 class ConferencesList extends StatefulWidget {
@@ -12,10 +12,11 @@ class ConferencesList extends StatefulWidget {
 class _ConferencesListState extends State<ConferencesList> {
   @override
   Widget build(BuildContext context) {
-    final conferences = Provider.of<QuerySnapshot>(context);
-    // print(favoritePapers.docs);
-    for (var doc in conferences.docs) {
-      print(doc.data());
+    final conferences = Provider.of<List<Conference>>(context);
+    for (var conference in conferences) {
+      print(conference.name);
+      print(conference.location);
+      print(conference.days);
     }
     return const Placeholder();
   }

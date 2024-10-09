@@ -1,4 +1,4 @@
-import 'package:conference_management_system/screens/home/conferences_screen.dart';
+import 'package:conference_management_system/screens/home/conferences/conferences_screen.dart';
 import 'package:conference_management_system/screens/home/authors_screen.dart';
 import 'package:conference_management_system/screens/home/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';

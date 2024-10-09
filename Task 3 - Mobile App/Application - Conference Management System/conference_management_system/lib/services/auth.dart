@@ -52,7 +52,7 @@ class AuthService {
       User? user = result.user;
 
       // create a new documetn for the user with the uid
-      await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
+      // await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
 
       return _userFromFirebaseUser(user);
     } catch (e) {

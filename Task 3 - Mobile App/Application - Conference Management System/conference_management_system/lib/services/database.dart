@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conference_management_system/models/conference.dart';
 
 class DatabaseService {
   final String uid;
@@ -24,9 +25,6 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('persons');
 
   //* Streams
-  Stream<QuerySnapshot<Object?>> get conferences {
-    return conferencesCollection.snapshots();
-  }
 
   Stream<DocumentSnapshot> get sessions {
     return sessionsCollection.doc(uid).snapshots();
@@ -48,27 +46,43 @@ class DatabaseService {
     return personsCollection.doc(uid).snapshots();
   }
 
-  /// Adds a favorite paper to the user's document.
-  /// [paperId] is the ID of the document in the `favoritePapers` collection.
-  Future<void> addUserFavoritePaper(String paperId) async {
-    // Create a reference to the paper in the `favoritePapers` collection
-    DocumentReference paperReference = papersCollection.doc(paperId);
-
-    // Update the user's document by adding the paper reference to `favoritePapers` array
-    return await usersCollection.doc(uid).update({
-      'favoritePapers': FieldValue.arrayUnion([paperReference])
-    });
+  //conference list from snapshot
+  List<Conference> _conferenceListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      return Conference(
+          id: doc.id,
+          name: data['name'] ?? '',
+          location: data['location'] ?? '',
+          days: data['days'] ?? []);
+    }).toList();
   }
 
-  /// Removes a favorite paper from the user's document.
-  /// [paperId] is the ID of the document in the `favoritePapers` collection.
-  Future<void> removeUserFavoritePaper(String paperId) async {
-    // Create a reference to the paper in the `favoritePapers` collection
-    DocumentReference paperReference = papersCollection.doc(paperId);
-
-    // Update the user's document by removing the paper reference from `favoritePapers` array
-    return await usersCollection.doc(uid).update({
-      'favoritePapers': FieldValue.arrayRemove([paperReference])
-    });
+  Stream<List<Conference>> get conferences {
+    return conferencesCollection.snapshots().map(_conferenceListFromSnapshot);
   }
+
+  // /// Adds a favorite paper to the user's document.
+  // /// [paperId] is the ID of the document in the `favoritePapers` collection.
+  // Future<void> addUserFavoritePaper(String paperId) async {
+  //   // Create a reference to the paper in the `favoritePapers` collection
+  //   DocumentReference paperReference = papersCollection.doc(paperId);
+
+  //   // Update the user's document by adding the paper reference to `favoritePapers` array
+  //   return await usersCollection.doc(uid).update({
+  //     'favoritePapers': FieldValue.arrayUnion([paperReference])
+  //   });
+  // }
+
+  // /// Removes a favorite paper from the user's document.
+  // /// [paperId] is the ID of the document in the `favoritePapers` collection.
+  // Future<void> removeUserFavoritePaper(String paperId) async {
+  //   // Create a reference to the paper in the `favoritePapers` collection
+  //   DocumentReference paperReference = papersCollection.doc(paperId);
+
+  //   // Update the user's document by removing the paper reference from `favoritePapers` array
+  //   return await usersCollection.doc(uid).update({
+  //     'favoritePapers': FieldValue.arrayRemove([paperReference])
+  //   });
+  // }
 }
