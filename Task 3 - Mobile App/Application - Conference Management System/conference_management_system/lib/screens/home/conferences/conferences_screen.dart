@@ -13,11 +13,14 @@ class ConferencesScreen extends StatelessWidget {
         value: DatabaseService(uid: 'uid').conferences,
         initialData: null,
         child: Scaffold(
+          backgroundColor: Colors.amber[100],
           appBar: AppBar(
+            backgroundColor: Colors.amber[400],
             title: const Text('Conferences Screen'),
           ),
           body: const Column(
             children: [
+              SizedBox(height: 50.0),
               Center(
                 child: Text(
                   'Your Conferences',

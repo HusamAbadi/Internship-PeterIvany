@@ -15,11 +15,14 @@ class DaysScreen extends StatelessWidget {
         value: DatabaseService(uid: 'uid').daysStream(conferenceId),
         initialData: null,
         child: Scaffold(
+          backgroundColor: Colors.amber[100],
           appBar: AppBar(
+            backgroundColor: Colors.amber[400],
             title: const Text('Days Screen'),
           ),
           body: Column(
             children: [
+              SizedBox(height: 50.0),
               const Center(
                 child: Text(
                   'Days',

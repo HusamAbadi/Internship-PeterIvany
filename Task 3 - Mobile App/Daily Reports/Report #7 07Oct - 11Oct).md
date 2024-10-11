@@ -82,3 +82,23 @@
         -Resolved the "Null check operator used on a null value" error by handling null data more gracefully.
 
 # Day 46 (11th October): 
+
+    Task: Implement Status Indicator for Conferences and Days.
+
+    Description: Enhanced the ConferenceTile and DayTile components in the Flutter application to visually indicate the relevance of conferences and days based on their scheduled times. This feature helps users quickly identify whether a conference or day is upcoming, ongoing, or has already ended.
+
+    Details of Implementation:
+
+        -ConferenceTile:
+            --Added logic to change the color of the CircleAvatar based on the conference's current status:
+                ---Green: Indicates that the conference is currently ongoing (i.e., the current date and time falls within the conference's scheduled start and end times).
+                ---Orange: Indicates that the conference is upcoming (i.e., the current date and time is before the conference's start time).
+                ---Red: Indicates that the conference has ended (i.e., the current date and time is after the conference's end time).
+            --Implemented date and time formatting for better readability of the conference details.
+
+        -DayTile:
+            --Implemented similar functionality for the DayTile component to reflect the current status:
+                ---Green: Indicates that the day is currently ongoing (i.e., the current date and time falls within the day's scheduled start and end times).
+                ---Orange: Indicates that the day is upcoming (i.e., the current date and time is before the day's start time).
+                ---Red: Indicates that the day has ended (i.e., the current date and time is after the day's end time).
+            --Enhanced date and time formatting for clarity and improved user experience.

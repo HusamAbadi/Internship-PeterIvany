@@ -15,6 +15,8 @@ class _ConferencesListState extends State<ConferencesList> {
   Widget build(BuildContext context) {
     final conferences = Provider.of<List<Conference>?>(context);
 
+  conferences?.sort((a, b) => a.startDate.compareTo(b.startDate));
+
     return ListView.builder(
       itemCount: conferences?.length,
       itemBuilder: (context, index) {

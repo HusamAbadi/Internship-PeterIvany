@@ -22,6 +22,9 @@ class DaysList extends StatelessWidget {
       return Center(child: Text('No days available for this conference.'));
     }
 
+    // Sort the days list based on the date
+    days.sort((a, b) => a.date.compareTo(b.date));
+
     return ListView.builder(
       itemCount: days.length,
       itemBuilder: (context, index) {

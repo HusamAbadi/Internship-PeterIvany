@@ -10,20 +10,36 @@ class ConferenceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use DateFormat to format the start and end dates to include day of the week
+    // Use DateFormat to format the start and end dates
     String formattedStartDate =
         DateFormat('EEEE, yyyy-MM-dd').format(conference.startDate);
     String formattedEndDate =
         DateFormat('EEEE, yyyy-MM-dd').format(conference.endDate);
+
+    // Get the current date and time
+    DateTime now = DateTime.now();
+
+    // Determine the status of the conference based on the current date and time
+    Color circleColor;
+    if (now.isBefore(conference.startDate)) {
+      // Conference is upcoming
+      circleColor = Colors.orange;
+    } else if (now.isAfter(conference.endDate)) {
+      // Conference has ended
+      circleColor = Colors.red;
+    } else {
+      // Conference is currently running
+      circleColor = Colors.green;
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
         margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.amber,
+            backgroundColor: circleColor, // Set the color based on the status
           ),
           title: Center(child: Text(conference.name)), // Center title
           subtitle: Column(
@@ -33,16 +49,13 @@ class ConferenceTile extends StatelessWidget {
             children: [
               Text(conference.location),
               SizedBox(height: 4), // Adds some space between lines
-              Text(
-                  'Start: $formattedStartDate'), // Display date with day of the week
-              Text(
-                  'End: $formattedEndDate'), // Display date with day of the week
+              Text('Start: $formattedStartDate'), // Display date with time
+              Text('End: $formattedEndDate'), // Display date with time
             ],
           ),
-          // When the tile is tapped, navigate to the ConferenceDetailsScreen
+          // When the tile is tapped, navigate to the DaysScreen
           onTap: () {
             print(conference.id);
-            // print(conference.days[0].id);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -50,7 +63,6 @@ class ConferenceTile extends StatelessWidget {
               ),
             );
           },
-          
         ),
       ),
     );

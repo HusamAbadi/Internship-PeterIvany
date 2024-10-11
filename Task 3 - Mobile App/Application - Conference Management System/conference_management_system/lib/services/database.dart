@@ -71,6 +71,7 @@ class DatabaseService {
       final data = doc.data() as Map<String, dynamic>;
       return Day(
         date: (data['date'] as Timestamp).toDate(),
+        endTime: (data['endTime'] as Timestamp).toDate(),
         // sessions: data['sessions'] ?? [],
       );
     }).toList();
