@@ -61,3 +61,24 @@
         -Connecting the ConferencesTile to the Conference List:
             --The ConferencesTile widget was integrated into the ConferencesList widget, where each item in the list is passed as a Conference object to ConferencesTile.
             --This ensures each ConferencesTile is populated with the correct data from Firestore, providing a neat display of the conference preferences.
+
+# Day 45 (10th October): 
+    Task:
+        -Implement a list of days for each conference in the app.
+        -Ensure that clicking a conference tile opens the DaysScreen to display the days of that conference.
+        -Resolve the "Null check operator used on a null value" error.
+
+    Actions Taken:
+        -Created DaysScreen:
+        
+        -Updated DaysList Widget:
+        
+        -Debugged "Null Check" Error:
+        
+        -Verified Navigation and Data Flow:
+        
+    Outcome:
+        -Successfully implemented the feature to display days for each conference.
+        -Resolved the "Null check operator used on a null value" error by handling null data more gracefully.
+
+# Day 46 (11th October): 

@@ -65,15 +65,29 @@ class DatabaseService {
     return conferencesCollection.snapshots().map(_conferenceListFromSnapshot);
   }
 
-  //day list from snapshot
+  // Days list from snapshot
   List<Day> _dayListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
-      return Day(date: (data['startDate'] as Timestamp).toDate(), sessions: []);
+      return Day(
+        date: (data['date'] as Timestamp).toDate(),
+        // sessions: data['sessions'] ?? [],
+      );
     }).toList();
   }
 
-  // Stream<List<Day>> get days {
-  //   return daysCollection.snapshots().map(_dayListFromSnapshot);
-  // }
+  /// Stream for days sub-collection in a specific conference document
+  Stream<List<Day>> daysStream(String conferenceId) {
+    return conferencesCollection
+        .doc(conferenceId)
+        .collection('days')
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.docs.isEmpty) {
+        print('No days found for conference: $conferenceId');
+        return []; // Return an empty list if no documents found
+      }
+      return _dayListFromSnapshot(snapshot);
+    });
+  }
 }

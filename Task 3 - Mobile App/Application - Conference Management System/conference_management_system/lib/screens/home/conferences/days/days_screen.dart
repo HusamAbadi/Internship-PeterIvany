@@ -1,19 +1,18 @@
-import 'package:conference_management_system/screens/home/conferences/conferences_list.dart';
+import 'package:conference_management_system/models/day.dart';
+import 'package:conference_management_system/screens/home/conferences/days/days_list.dart';
 import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
-import 'package:conference_management_system/models/conference.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DaysScreen extends StatelessWidget {
-  final Conference conference;
+  final String conferenceId;
 
-  const DaysScreen({required this.conference, Key? key}) : super(key: key);
+  const DaysScreen({super.key, required this.conferenceId});
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Conference>?>.value(
-        value: DatabaseService(uid: 'uid').conferences,
+    return StreamProvider<List<Day>?>.value(
+        value: DatabaseService(uid: 'uid').daysStream(conferenceId),
         initialData: null,
         child: Scaffold(
           appBar: AppBar(
@@ -21,16 +20,15 @@ class DaysScreen extends StatelessWidget {
           ),
           body: Column(
             children: [
-              SizedBox(height: 20.0),
-              Center(
+              const Center(
                 child: Text(
-                  conference.name,
-                  style: const TextStyle(fontSize: 24),
+                  'Days',
+                  style: TextStyle(fontSize: 24),
                 ),
               ),
               const SizedBox(height: 40.0),
-              const Expanded(
-                child: ConferencesList(),
+              Expanded(
+                child: DaysList(conferenceId: conferenceId),
               ),
             ],
           ),

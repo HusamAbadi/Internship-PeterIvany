@@ -1,5 +1,5 @@
 import 'package:conference_management_system/models/conference.dart';
-import 'package:conference_management_system/screens/home/conference_tile.dart';
+import 'package:conference_management_system/screens/home/conferences/conference_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

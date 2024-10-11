@@ -41,13 +41,16 @@ class ConferenceTile extends StatelessWidget {
           ),
           // When the tile is tapped, navigate to the ConferenceDetailsScreen
           onTap: () {
+            print(conference.id);
+            // print(conference.days[0].id);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DaysScreen(conference: conference),
+                builder: (context) => DaysScreen(conferenceId: conference.id),
               ),
             );
           },
+          
         ),
       ),
     );
