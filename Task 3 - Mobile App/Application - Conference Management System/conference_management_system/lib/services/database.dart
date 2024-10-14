@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/models/day.dart';
+import 'package:conference_management_system/models/session.dart';
+import 'package:conference_management_system/models/person.dart';
+import 'package:conference_management_system/models/paper.dart';
+import 'package:conference_management_system/models/user.dart';
+import 'package:conference_management_system/models/keyword.dart';
 
 class DatabaseService {
   final String uid;
@@ -47,7 +52,7 @@ class DatabaseService {
     return personsCollection.doc(uid).snapshots();
   }
 
-  //conference list from snapshot
+  // conference list from snapshot
   List<Conference> _conferenceListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
@@ -70,9 +75,10 @@ class DatabaseService {
     return snapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
       return Day(
+        id: doc.id,
         date: (data['date'] as Timestamp).toDate(),
         endTime: (data['endTime'] as Timestamp).toDate(),
-        // sessions: data['sessions'] ?? [],
+        sessions: List<DocumentReference>.from(data['sessions'] ?? []),
       );
     }).toList();
   }
@@ -83,12 +89,60 @@ class DatabaseService {
         .doc(conferenceId)
         .collection('days')
         .snapshots()
-        .map((snapshot) {
+        .map(_dayListFromSnapshot);
+  }
+
+  Future<List<Session>> fetchSessions(String conferenceId, String dayId) async {
+    try {
+      QuerySnapshot snapshot = await sessionsCollection
+          .where('conferenceId', isEqualTo: conferenceId)
+          .where('dayId', isEqualTo: dayId)
+          .get();
+
+      // Check if the snapshot has data
       if (snapshot.docs.isEmpty) {
-        print('No days found for conference: $conferenceId');
-        return []; // Return an empty list if no documents found
+        print(
+            'No sessions found for conferenceId: $conferenceId and dayId: $dayId');
+        return []; // Return an empty list if no documents were found
       }
-      return _dayListFromSnapshot(snapshot);
-    });
+
+      // If there are documents, map them to the Session model
+      print(
+          'Fetched ${snapshot.docs.length} sessions for conferenceId: $conferenceId and dayId: $dayId');
+      return snapshot.docs.map((doc) => Session.fromFirestore(doc)).toList();
+    } catch (e) {
+      print('Error fetching sessions: $e'); // Log the error
+      return []; // Return an empty list if there's an error
+    }
+  }
+
+  //* Fetch Methods for New Models
+
+  // Fetch a single Person document
+  Future<Person> fetchPerson(String personId) async {
+    DocumentSnapshot doc = await personsCollection.doc(personId).get();
+    return Person.fromFirestore(doc);
+  }
+
+  // Fetch a single Paper document
+  Future<Paper> fetchPaper(String paperId) async {
+    DocumentSnapshot doc = await papersCollection.doc(paperId).get();
+    return Paper.fromFirestore(doc);
+  }
+
+  // Fetch a single User document
+  Future<AppUser> fetchUser(String userId) async {
+    DocumentSnapshot doc = await usersCollection.doc(userId).get();
+    return AppUser.fromFirestore(doc);
+  }
+
+  // Fetch a single Keyword document
+  Future<Keyword> fetchKeyword(String keywordId) async {
+    DocumentSnapshot doc = await keywordsCollection.doc(keywordId).get();
+    return Keyword.fromFirestore(doc);
+  }
+
+  Future<void> addUserFavoritePaper(String paperId) async {
+    // implementation to add a favorite paper to the user's data in Firestore
   }
 }

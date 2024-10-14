@@ -1,4 +1,3 @@
-// Model class for Session
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Session {
@@ -7,7 +6,10 @@ class Session {
   final String description;
   final DateTime startTime;
   final DateTime endTime;
-  final String speaker;
+  final String location;
+  final bool isBreak;
+  final List<DocumentReference> chairPersons;
+  final List<DocumentReference> papers;
 
   Session({
     required this.id,
@@ -15,30 +17,25 @@ class Session {
     required this.description,
     required this.startTime,
     required this.endTime,
-    required this.speaker,
+    required this.location,
+    required this.isBreak,
+    required this.chairPersons,
+    required this.papers,
   });
 
-  // Convert Firestore document to Session object
+  // Factory method to create a Session from Firestore document
   factory Session.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    final data = doc.data() as Map<String, dynamic>;
     return Session(
       id: doc.id,
-      title: data['title'],
-      description: data['description'],
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
       startTime: (data['startTime'] as Timestamp).toDate(),
       endTime: (data['endTime'] as Timestamp).toDate(),
-      speaker: data['speaker'],
+      location: data['location'] ?? '',
+      isBreak: data['isBreak'] ?? false,
+      chairPersons: List<DocumentReference>.from(data['chairPersons'] ?? []),
+      papers: List<DocumentReference>.from(data['papers'] ?? []),
     );
-  }
-
-  // Convert Session object to Firestore document
-  Map<String, dynamic> toFirestore() {
-    return {
-      'title': title,
-      'description': description,
-      'startTime': Timestamp.fromDate(startTime),
-      'endTime': Timestamp.fromDate(endTime),
-      'speaker': speaker,
-    };
   }
 }

@@ -1,34 +1,26 @@
-// Model class for Day
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Day {
+  final String id;
   final DateTime date;
   final DateTime endTime;
-  // final List<DocumentReference> sessions; // References to session documents
+  final List<DocumentReference> sessions; // Array of references to sessions
 
   Day({
+    required this.id,
     required this.date,
     required this.endTime,
-
-    // required this.sessions,
+    required this.sessions,
   });
 
-  // Convert Firestore document to Day object
-  // factory Day.fromFirestore(DocumentSnapshot doc) {
-  //   Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-  //   return Day(
-  //     date: (data['date'] as Timestamp).toDate(),
-  //     // endTime: (data['endTime'] as Timestamp).toDate(),
-  //     // sessions: List<DocumentReference>.from(data['sessions']),
-  //   );
-  // }
-
-  // // Convert Day object to Firestore document
-  // Map<String, dynamic> toFirestore() {
-  //   return {
-  //     'date': Timestamp.fromDate(date),
-  //     // 'endTime': Timestamp.fromDate(endTime),
-  //     // 'sessions': sessions,
-  //   };
-  // }
+  // Factory method to create a day from a Firestore document
+  factory Day.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Day(
+      id: doc.id,
+      date: (data['date'] as Timestamp).toDate(),
+      endTime: (data['endTime'] as Timestamp).toDate(),
+      sessions: List<DocumentReference>.from(data['sessions'] ?? []),
+    );
+  }
 }

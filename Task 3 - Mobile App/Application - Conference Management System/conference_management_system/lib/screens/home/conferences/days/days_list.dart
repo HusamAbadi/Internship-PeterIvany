@@ -28,7 +28,8 @@ class DaysList extends StatelessWidget {
     return ListView.builder(
       itemCount: days.length,
       itemBuilder: (context, index) {
-        return DayTile(day: days[index]);
+        return DayTile(
+            day: days[index], conferenceId: conferenceId!); // Pass conferenceId
       },
     );
   }

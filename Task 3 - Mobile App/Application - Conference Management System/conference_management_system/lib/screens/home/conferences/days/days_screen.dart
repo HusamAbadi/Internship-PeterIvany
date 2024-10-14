@@ -7,34 +7,38 @@ import 'package:provider/provider.dart';
 class DaysScreen extends StatelessWidget {
   final String conferenceId;
 
-  const DaysScreen({super.key, required this.conferenceId});
+  const DaysScreen({Key? key, required this.conferenceId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Day>?>.value(
-        value: DatabaseService(uid: 'uid').daysStream(conferenceId),
-        initialData: null,
-        child: Scaffold(
-          backgroundColor: Colors.amber[100],
-          appBar: AppBar(
-            backgroundColor: Colors.amber[400],
-            title: const Text('Days Screen'),
-          ),
-          body: Column(
-            children: [
-              SizedBox(height: 50.0),
-              const Center(
-                child: Text(
-                  'Days',
-                  style: TextStyle(fontSize: 24),
-                ),
+      value: DatabaseService(uid: 'uid')
+          .daysStream(conferenceId), // Provide conference ID
+      initialData: null,
+      child: Scaffold(
+        backgroundColor: Colors.amber[100],
+        appBar: AppBar(
+          backgroundColor: Colors.amber[400],
+          title: const Text('Days Screen'),
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 50.0),
+            const Center(
+              child: Text(
+                'Days',
+                style: TextStyle(fontSize: 24),
               ),
-              const SizedBox(height: 40.0),
-              Expanded(
-                child: DaysList(conferenceId: conferenceId),
-              ),
-            ],
-          ),
-        ));
+            ),
+            const SizedBox(height: 40.0),
+            Expanded(
+              child: DaysList(
+                  conferenceId:
+                      conferenceId), // Pass the conferenceId to the DaysList
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
