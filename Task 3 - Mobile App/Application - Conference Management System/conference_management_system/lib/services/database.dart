@@ -31,7 +31,6 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('persons');
 
   //* Streams
-
   Stream<DocumentSnapshot> get sessions {
     return sessionsCollection.doc(uid).snapshots();
   }
@@ -52,7 +51,7 @@ class DatabaseService {
     return personsCollection.doc(uid).snapshots();
   }
 
-  // conference list from snapshot
+  //* conference list from snapshot
   List<Conference> _conferenceListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
@@ -83,7 +82,7 @@ class DatabaseService {
     }).toList();
   }
 
-  /// Stream for days sub-collection in a specific conference document
+  ///* Stream for days sub-collection in a specific conference document
   Stream<List<Day>> daysStream(String conferenceId) {
     return conferencesCollection
         .doc(conferenceId)

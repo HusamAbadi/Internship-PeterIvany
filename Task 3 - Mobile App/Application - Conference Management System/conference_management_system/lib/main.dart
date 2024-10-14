@@ -21,7 +21,7 @@ class MainApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         home: Wrapper(),
-        // Now we can use the AppUser Data whenever we get some within the Wrapper widget and all which within it
+        //* Now we can use the AppUser Data whenever we get some within the Wrapper widget and all which within it
       ),
     );
   }

@@ -17,12 +17,13 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<
-      FormState>(); //we wil use this global key To identify, track the state and validate our form
+      FormState>(); //* we wil use this global key To identify, track the state and validate our form
   bool loading = false;
 
-  // text field state
+  //* text field state
   String email = '';
   String password = '';
+
   String error = '';
 
   @override

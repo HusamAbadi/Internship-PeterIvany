@@ -6,7 +6,6 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   AppUser? _userFromFirebaseUser(User? user) {
-    // Update this method to create AppUser based on the modified model
     return user != null ? AppUser(id: user.uid, favoritePapers: []) : null;
   }
 
@@ -43,8 +42,7 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
 
-      // // You might want to save additional user information to Firestore here
-      await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
+      // await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
 
       return _userFromFirebaseUser(user);
     } catch (e) {
