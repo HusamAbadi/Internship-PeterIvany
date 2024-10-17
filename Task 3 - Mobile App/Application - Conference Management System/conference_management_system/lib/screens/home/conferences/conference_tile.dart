@@ -59,7 +59,7 @@ class ConferenceTile extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DaysScreen(conferenceId: conference.id),
+                builder: (context) => DaysScreen(conference: conference),
               ),
             );
           },

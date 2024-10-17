@@ -1,12 +1,13 @@
+import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/screens/home/conferences/days/day_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:conference_management_system/models/day.dart';
 import 'package:provider/provider.dart';
 
 class DaysList extends StatelessWidget {
-  final String? conferenceId;
+  final Conference? conference;
 
-  const DaysList({this.conferenceId, Key? key}) : super(key: key);
+  const DaysList({this.conference, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,10 @@ class DaysList extends StatelessWidget {
       itemCount: days.length,
       itemBuilder: (context, index) {
         return DayTile(
-            day: days[index], conferenceId: conferenceId!); // Pass conferenceId
+          day: days[index],
+          conference: conference!,
+          increment: index + 1, // Increment based on index
+        );
       },
     );
   }

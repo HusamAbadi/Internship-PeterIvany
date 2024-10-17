@@ -1,54 +1,47 @@
+import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/models/day.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/screens/home/conferences/days/sessions/sessions_list.dart';
 import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SessionsScreen extends StatefulWidget {
+class SessionsScreen extends StatelessWidget {
   final Day day;
-  final String conferenceId;
+  final Conference conference;
 
   const SessionsScreen(
-      {Key? key, required this.day, required this.conferenceId})
-      : super(key: key);
-
-  @override
-  _SessionsScreenState createState() => _SessionsScreenState();
-}
-
-class _SessionsScreenState extends State<SessionsScreen> {
-  late Future<List<Session>> sessionsFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    print(
-        'Fetching sessions for conferenceId: ${widget.conferenceId} and dayId: ${widget.day.id}');
-    sessionsFuture = DatabaseService(uid: 'uid')
-        .fetchSessions(widget.conferenceId, widget.day.id);
-  }
+      {super.key, required this.day, required this.conference});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sessions for ${widget.day.date}'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FutureBuilder<List<Session>>(
-          future: sessionsFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasError) {
-              return const Center(child: Text('Error loading sessions'));
-            }
-
-            // Delegate to SessionsList for empty state and data display
-            return SessionsList(sessions: snapshot.data ?? []);
-          },
+    return FutureProvider<List<Session>?>(
+      create: (context) => DatabaseService(uid: 'uid').sessionsFuture(
+          conference.id, day.id), // Provide the future from the database
+      initialData: null, // Set the initial data to null
+      child: Scaffold(
+        backgroundColor: Colors.amber[100],
+        appBar: AppBar(
+          backgroundColor: Colors.amber[400],
+          title: Text('Sessions for ${day.date}'),
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 50.0),
+            const Center(
+              child: Text(
+                'Sessions',
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+            const SizedBox(height: 40.0),
+            Expanded(
+              child: SessionsList(
+                conference: conference,
+                day: day,
+              ),
+            ),
+          ],
         ),
       ),
     );

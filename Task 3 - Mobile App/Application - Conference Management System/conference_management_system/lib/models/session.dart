@@ -8,8 +8,8 @@ class Session {
   final DateTime endTime;
   final String location;
   final bool isBreak;
-  final List<DocumentReference> chairPersons;
   final List<DocumentReference> papers;
+  // final List<DocumentReference> chairPersons;
 
   Session({
     required this.id,
@@ -19,8 +19,8 @@ class Session {
     required this.endTime,
     required this.location,
     required this.isBreak,
-    required this.chairPersons,
     required this.papers,
+    // required this.chairPersons,
   });
 
   // Factory method to create a Session from Firestore document
@@ -34,8 +34,13 @@ class Session {
       endTime: (data['endTime'] as Timestamp).toDate(),
       location: data['location'] ?? '',
       isBreak: data['isBreak'] ?? false,
-      chairPersons: List<DocumentReference>.from(data['chairPersons'] ?? []),
       papers: List<DocumentReference>.from(data['papers'] ?? []),
+      // chairPersons: List<DocumentReference>.from(data['chairPersons'] ?? []),
     );
   }
+
+  // Static method to convert a list of documents from Firestore to a list of Session objects
+  // static List<Session> fromQuerySnapshot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) => Session.fromFirestore(doc)).toList();
+  // }
 }
