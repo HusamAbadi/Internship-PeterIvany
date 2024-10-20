@@ -1,6 +1,6 @@
 import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/models/day.dart';
-import 'package:conference_management_system/screens/home/conferences/days/days_list.dart';
+import 'package:conference_management_system/screens/days/days_list.dart';
 import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,15 +20,15 @@ class DaysScreen extends StatelessWidget {
         backgroundColor: Colors.amber[100],
         appBar: AppBar(
           backgroundColor: Colors.amber[400],
-          title: const Text('Days Screen'),
+          title: Text(conference.name),
         ),
         body: Column(
           children: [
             const SizedBox(height: 50.0),
-            Center(
+            const Center(
               child: Text(
-                conference.name,
-                style: const TextStyle(fontSize: 24),
+                "Days",
+                style: TextStyle(fontSize: 24),
               ),
             ),
             const SizedBox(height: 40.0),

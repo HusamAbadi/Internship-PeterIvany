@@ -15,3 +15,5 @@ Tasks Completed:
     Understanding of Firestore Data Mappings:
         -Explored the use of DocumentSnapshot and QuerySnapshot in Firestore to map data from Firestore to Dart models (e.g., converting Firestore Timestamp to DateTime).
         -Applied this knowledge to build efficient and responsive data-driven components in Flutter, improving the overall performance of the application.
+
+# Day 49 (Octoper 17th):

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conference_management_system/models/paper.dart';
 
 class Session {
   final String id;
@@ -8,8 +9,8 @@ class Session {
   final DateTime endTime;
   final String location;
   final bool isBreak;
-  final List<DocumentReference> papers;
-  // final List<DocumentReference> chairPersons;
+  final List<String> papers;
+  final List<String> chairPersons;
 
   Session({
     required this.id,
@@ -20,7 +21,7 @@ class Session {
     required this.location,
     required this.isBreak,
     required this.papers,
-    // required this.chairPersons,
+    required this.chairPersons,
   });
 
   // Factory method to create a Session from Firestore document
@@ -34,13 +35,9 @@ class Session {
       endTime: (data['endTime'] as Timestamp).toDate(),
       location: data['location'] ?? '',
       isBreak: data['isBreak'] ?? false,
-      papers: List<DocumentReference>.from(data['papers'] ?? []),
-      // chairPersons: List<DocumentReference>.from(data['chairPersons'] ?? []),
+      papers: List<String>.from(data['papers'] ?? []),
+      chairPersons: List<String>.from(
+          data['chairPersons'] ?? []), // Map the papers references
     );
   }
-
-  // Static method to convert a list of documents from Firestore to a list of Session objects
-  // static List<Session> fromQuerySnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) => Session.fromFirestore(doc)).toList();
-  // }
 }

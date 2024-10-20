@@ -1,5 +1,5 @@
 import 'package:conference_management_system/models/conference.dart';
-import 'package:conference_management_system/screens/home/conferences/conferences_list.dart';
+import 'package:conference_management_system/screens/conferences/conferences_list.dart';
 import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class ConferencesScreen extends StatelessWidget {
           backgroundColor: Colors.amber[100],
           appBar: AppBar(
             backgroundColor: Colors.amber[400],
-            title: const Text('Conferences Screen'),
+            title: const Text('Conferences'),
           ),
           body: const Column(
             children: [

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conference_management_system/models/keyword.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Paper {
   final String id;
   final String title;
   final String abstract;
-  final List<DocumentReference> authors; // References to persons
-  final List<DocumentReference> keywords; // References to keywords
+  final List<String> authors;
+  final List<String> keywords;
 
   Paper({
     required this.id,
@@ -22,8 +24,8 @@ class Paper {
       id: doc.id,
       title: data['title'] ?? '',
       abstract: data['abstract'] ?? '',
-      authors: List<DocumentReference>.from(data['authors'] ?? []),
-      keywords: List<DocumentReference>.from(data['keywords'] ?? []),
+      authors: List<String>.from(data['authors'] ?? []),
+      keywords: List<String>.from(data['keywords'] ?? []),
     );
   }
 }

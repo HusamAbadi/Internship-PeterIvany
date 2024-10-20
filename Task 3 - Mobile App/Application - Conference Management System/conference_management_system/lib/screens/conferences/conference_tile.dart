@@ -1,4 +1,4 @@
-import 'package:conference_management_system/screens/home/conferences/days/days_screen.dart';
+import 'package:conference_management_system/screens/days/days_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:conference_management_system/models/conference.dart';
 import 'package:intl/intl.dart';

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/models/day.dart';
-import 'package:conference_management_system/screens/home/conferences/days/sessions/sessions_screen.dart';
+import 'package:conference_management_system/screens/sessions/sessions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -45,7 +45,6 @@ class DayTile extends StatelessWidget {
               '${DateFormat('hh:mm a').format(day.date)} - ${DateFormat('hh:mm a').format(day.endTime)}',
             ),
             onTap: () {
-              print(day.sessions);
               // Navigate to the SessionsScreen when the day is tapped
               Navigator.push(
                 context,
