@@ -1,8 +1,11 @@
 import 'package:conference_management_system/models/conference.dart';
+import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/screens/papers/papers_screen.dart';
+import 'package:conference_management_system/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class SessionTile extends StatelessWidget {
   final Conference conference;
@@ -32,25 +35,67 @@ class SessionTile extends StatelessWidget {
     String formattedStartTime = DateFormat('hh:mm a').format(session.startTime);
     String formattedEndTime = DateFormat('hh:mm a').format(session.endTime);
 
-    return Card(
-      margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 25.0,
-          backgroundColor: circleColor, // Set the color based on the status
-        ),
-        title: Text(session.title),
-        subtitle:
-            Text('$formattedStartTime - $formattedEndTime'), // Show only time
-        onTap: () {
-          // print(session.papers);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PapersScreen(session: session),
+    return FutureProvider<List<Person>?>(
+      create: (context) =>
+          DatabaseService(uid: 'uid').fetchChairPersons(session.chairPersons),
+      initialData: null,
+      child: Column(
+        children: [
+          Card(
+            margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 25.0,
+                    backgroundColor:
+                        circleColor, // Set the color based on the status
+                  ),
+                  title: Text(session.title),
+                  subtitle: Column(
+                    children: [
+                      Text('$formattedStartTime - $formattedEndTime'),
+                      Container(
+                        height: session.chairPersons.length * 20,
+                        child: Consumer<List<Person>?>(
+                          builder: (context, chairPersons, child) {
+                            if (chairPersons == null) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else if (chairPersons.isEmpty) {
+                              return const Center(
+                                  child: Text('No chairpersons found.'));
+                            } else {
+                              return ListView.builder(
+                                itemCount: chairPersons.length,
+                                itemBuilder: (context, index) {
+                                  final chairPerson = chairPersons[index];
+                                  return Text(
+                                    chairPerson.name,
+                                    style: const TextStyle(
+                                        color: Colors.lightBlue),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ), // Show only time
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PapersScreen(session: session),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

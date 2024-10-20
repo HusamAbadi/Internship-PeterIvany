@@ -122,12 +122,13 @@ class DatabaseService {
         persons.add(Person.fromFirestore(doc));
       }
     } catch (e) {
-      print('Error fetching papers: $e');
+      print('Error fetching Authors: $e');
     }
     return persons;
   }
 
-    Future<List<Session>> fetchAllAuthors(String conferenceId, String dayId) async {
+  Future<List<Session>> fetchAllAuthors(
+      String conferenceId, String dayId) async {
     try {
       QuerySnapshot snapshot = await personsCollection
           .doc(conferenceId)
@@ -151,9 +152,17 @@ class DatabaseService {
 
   //* Fetch Methods for New Models
 
-  Future<Person> fetchPerson(String personId) async {
-    DocumentSnapshot doc = await personsCollection.doc(personId).get();
-    return Person.fromFirestore(doc);
+  Future<List<Person>> fetchChairPersons(List<String> chairPersonsIds) async {
+    List<Person> persons = [];
+    try {
+      for (var chairPersonId in chairPersonsIds) {
+        DocumentSnapshot doc = await personsCollection.doc(chairPersonId).get();
+        persons.add(Person.fromFirestore(doc));
+      }
+    } catch (e) {
+      print('Error fetching chairPersons: $e');
+    }
+    return persons;
   }
 
   Future<AppUser> fetchUser(String userId) async {
