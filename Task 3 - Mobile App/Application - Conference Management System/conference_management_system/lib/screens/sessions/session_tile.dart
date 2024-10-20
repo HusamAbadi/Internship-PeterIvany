@@ -55,7 +55,7 @@ class SessionTile extends StatelessWidget {
                   subtitle: Column(
                     children: [
                       Text('$formattedStartTime - $formattedEndTime'),
-                      Container(
+                      SizedBox(
                         height: session.chairPersons.length * 20,
                         child: Consumer<List<Person>?>(
                           builder: (context, chairPersons, child) {
