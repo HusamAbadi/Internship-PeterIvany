@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'day.dart';
 
 class Conference {
   final String id;
@@ -18,7 +17,7 @@ class Conference {
     required this.days,
   });
 
-  // Factory method to create a Conference object from Firestore
+  // Factory method to create a Conference object from Firestore document
   factory Conference.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Conference(

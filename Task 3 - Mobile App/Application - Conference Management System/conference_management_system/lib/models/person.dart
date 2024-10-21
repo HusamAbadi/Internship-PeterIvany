@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Person {
-  final String id;
-  final String name;
-  final List<String> sessionsPresenting; // References to sessions
-  final List<String> papers; // References to papers
+  final String id; // Unique identifier for the person
+  final String name; // Name of the person
+  final List<String>
+      sessionsPresenting; // References to sessions the person is presenting
+  final List<String> papers; // References to papers authored by the person
 
   Person({
     required this.id,
@@ -17,10 +18,12 @@ class Person {
   factory Person.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Person(
-      id: doc.id,
-      name: data['name'] ?? '',
-      sessionsPresenting: List<String>.from(data['sessionsPresenting'] ?? []),
-      papers: List<String>.from(data['papers'] ?? []),
+      id: doc.id, // Get the document ID
+      name: data['name'] ?? '', // Default to empty string if name is null
+      sessionsPresenting: List<String>.from(
+          data['sessionsPresenting'] ?? []), // Convert to list of strings
+      papers:
+          List<String>.from(data['papers'] ?? []), // Convert to list of strings
     );
   }
 
@@ -34,52 +37,10 @@ class Person {
     try {
       QuerySnapshot snapshot =
           await FirebaseFirestore.instance.collection('persons').get();
-      return fromQuerySnapshot(snapshot);
+      return fromQuerySnapshot(
+          snapshot); // Convert the snapshot to a list of Person objects
     } catch (e) {
-      print('Error fetching persons: $e');
-      return [];
+      return []; // Return an empty list in case of an error
     }
   }
-
-  // // Method to save a new person to Firestore
-  // Future<void> saveToFirestore() async {
-  //   try {
-  //     await FirebaseFirestore.instance.collection('persons').doc(id).set({
-  //       'name': name,
-  //       'sessionsPresenting': sessionsPresenting,
-  //       'papers': papers,
-  //     });
-  //   } catch (e) {
-  //     print('Error saving person: $e');
-  //   }
-  // }
-
-  // // Method to delete a person from Firestore
-  // Future<void> deleteFromFirestore() async {
-  //   try {
-  //     await FirebaseFirestore.instance.collection('persons').doc(id).delete();
-  //   } catch (e) {
-  //     print('Error deleting person: $e');
-  //   }
-  // }
-
-  // // Static method to fetch a person from Firestore by ID
-  // static Future<Person?> fetchPersonById(String personId) async {
-  //   try {
-  //     DocumentSnapshot doc = await FirebaseFirestore.instance
-  //         .collection('persons')
-  //         .doc(personId)
-  //         .get();
-
-  //     if (doc.exists) {
-  //       return Person.fromFirestore(doc);
-  //     } else {
-  //       print('Person not found');
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching person: $e');
-  //     return null;
-  //   }
-  // }
 }

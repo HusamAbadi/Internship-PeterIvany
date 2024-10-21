@@ -39,67 +39,58 @@ class SessionTile extends StatelessWidget {
       create: (context) =>
           DatabaseService(uid: 'uid').fetchChairPersons(session.chairPersons),
       initialData: null,
-      child: Column(
-        children: [
-          Card(
-            margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    radius: 25.0,
-                    backgroundColor:
-                        circleColor, // Set the color based on the status
+      child: Card(
+        margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        child: Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                radius: 25.0,
+                backgroundColor:
+                    circleColor, // Set the color based on the status
+              ),
+              title: Text(session.title),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('$formattedStartTime - $formattedEndTime'),
+                  Text(session.location),
+                  const SizedBox(height: 8.0), // Space between lines
+                  Consumer<List<Person>?>(
+                    builder: (context, chairPersons, child) {
+                      if (chairPersons == null) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (chairPersons.isEmpty) {
+                        return const Center(
+                            child: Text('No chairpersons found.'));
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: chairPersons.map((chairPerson) {
+                          return Text(
+                            chairPerson.name,
+                            style: const TextStyle(color: Colors.lightBlue),
+                          );
+                        }).toList(),
+                      );
+                    },
                   ),
-                  title: Text(session.title),
-                  subtitle: Column(
-                    children: [
-                      Text('$formattedStartTime - $formattedEndTime'),
-                      Text(session.location),
-                      SizedBox(
-                        height: session.chairPersons.length * 20,
-                        child: Consumer<List<Person>?>(
-                          builder: (context, chairPersons, child) {
-                            if (chairPersons == null) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            } else if (chairPersons.isEmpty) {
-                              return const Center(
-                                  child: Text('No chairpersons found.'));
-                            } else {
-                              return ListView.builder(
-                                itemCount: chairPersons.length,
-                                itemBuilder: (context, index) {
-                                  final chairPerson = chairPersons[index];
-                                  return Text(
-                                    chairPerson.name,
-                                    style: const TextStyle(
-                                        color: Colors.lightBlue),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ), // Show only time
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PapersScreen.session(
-                          session: session,
-                          conference: conference,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PapersScreen.session(
+                      session: session,
+                      conference: conference,
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:conference_management_system/models/keyword.dart';
-import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/screens/papers/papers_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +9,15 @@ class KeywordsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 4, // Add elevation for shadow effect
+      margin: const EdgeInsets.all(8.0), // Add margin around the card
       child: ListTile(
         title: Text(
           keyword.name,
           textAlign: TextAlign.center,
-          maxLines: 3,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         ),
         onTap: () {
           Navigator.push(

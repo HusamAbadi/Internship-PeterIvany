@@ -11,13 +11,15 @@ class Keyword {
     required this.papers,
   });
 
-  // Factory method to create a Keyword from Firestore document
+  // Factory method to create a Keyword from a Firestore document
   factory Keyword.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Keyword(
       id: doc.id,
-      name: data['name'] ?? '',
-      papers: List<String>.from(data['papers'] ?? []),
+      name: data['name'] ??
+          '', // Provide a default empty string if 'name' is null
+      papers: List<String>.from(data['papers'] ??
+          []), // Convert the 'papers' field to a list of strings
     );
   }
 }

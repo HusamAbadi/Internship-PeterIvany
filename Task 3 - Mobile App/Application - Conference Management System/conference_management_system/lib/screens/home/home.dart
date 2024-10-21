@@ -9,31 +9,40 @@ class Home extends StatelessWidget {
 
   final AuthService _auth = AuthService();
 
+  // Define a list of button titles and their respective screens
+  final List<Map<String, dynamic>> _menuItems = [
+    {'title': 'Conferences', 'screen': const ConferencesScreen()},
+    {'title': 'Authors', 'screen': const AuthorsScreen()},
+    {'title': 'Keywords', 'screen': const KeywordsScreen()},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.amber[100],
         appBar: AppBar(
-          title: Text("Conference Management System"),
-          titleTextStyle: TextStyle(fontSize: 16, color: Colors.black),
-          backgroundColor: Colors.amber[400],
+          title: const Text("Home Screen"),
+          titleTextStyle: const TextStyle(fontSize: 16, color: Colors.black),
+          backgroundColor: Colors.amber[300],
           elevation: 0.0,
           actions: <Widget>[
             TextButton.icon(
-              icon: Icon(Icons.person),
-              label: Text("logout"),
+              icon: const Icon(Icons.person),
+              label: const Text("Logout"),
               onPressed: () async {
-                await _auth.signOut();
+                bool? confirmLogout = await _showLogoutDialog(context);
+                if (confirmLogout ?? false) {
+                  await _auth.signOut();
+                }
               },
-            )
+            ),
           ],
         ),
         body: SafeArea(
           child: Center(
             child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Center the Column vertically
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   "Conferences Management System",
@@ -41,75 +50,62 @@ class Home extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  "Welcome Back!",
+                  "Welcome!",
                   style: TextStyle(fontSize: 20),
                 ),
-                const SizedBox(height: 30), // Space between text and buttons
-                Column(
-                  children: [
-                    SizedBox(
-                      width: 200, // Set uniform width for all buttons
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ConferencesScreen()),
-                          );
-                        },
-                        child: const Text("Conferences"),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AuthorsScreen()),
-                          );
-                        },
-                        child: const Text("Authors"),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => KeywordsScreen()),
-                          );
-                        },
-                        child: const Text("Keywords"),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // SizedBox(
-                    //   width: 200,
-                    //   child: ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => FavoritePapers()),
-                    //       );
-                    //     },
-                    //     child: const Text("Your Favorite Papers"),
-                    //   ),
-                    // ),
-                  ],
-                ),
+                const SizedBox(height: 30),
+                _buildMenuButtons(context),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  // Method to build the menu buttons
+  Widget _buildMenuButtons(BuildContext context) {
+    return Column(
+      children: _menuItems.map((item) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => item['screen']),
+                );
+              },
+              child: Text(item['title']),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  // Method to show logout confirmation dialog
+  Future<bool?> _showLogoutDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Logout"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

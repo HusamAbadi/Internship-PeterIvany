@@ -7,20 +7,21 @@ import 'package:provider/provider.dart';
 class DaysList extends StatelessWidget {
   final Conference? conference;
 
-  const DaysList({this.conference, Key? key}) : super(key: key);
+  const DaysList({this.conference, super.key});
 
   @override
   Widget build(BuildContext context) {
     final days = Provider.of<List<Day>?>(context);
 
+    // Show loading indicator while fetching data
     if (days == null) {
-      // Show a loading indicator if the days list is null (data is being fetched)
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
+    // Show message if there are no days available
     if (days.isEmpty) {
-      // Show a message if the days list is empty
-      return Center(child: Text('No days available for this conference.'));
+      return const Center(
+          child: Text('No days available for this conference.'));
     }
 
     // Sort the days list based on the date

@@ -30,38 +30,42 @@ class SessionsScreen extends StatelessWidget {
           backgroundColor: Colors.amber[400],
           title: Text(conference.name),
         ),
-        body: Column(
-          children: [
-            const SizedBox(height: 50.0),
-            const Center(
-              child: Text(
-                "Sessions",
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
-            const SizedBox(height: 40.0),
-            Expanded(
-              child: Consumer<List<Session>?>(
-                builder: (context, sessions, child) {
-                  if (sessions == null) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (sessions.isEmpty) {
-                    return const Center(
-                      child: Text('No sessions available for this day.'),
-                    );
-                  }
-                  return SessionsList(
-                    sessions: sessions,
-                    conference: conference,
-                    day: day,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+        body: _buildBody(context),
       ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 50.0),
+        const Center(
+          child: Text(
+            "Sessions",
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
+        const SizedBox(height: 40.0),
+        Expanded(
+          child: Consumer<List<Session>?>(
+            builder: (context, sessions, child) {
+              if (sessions == null) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (sessions.isEmpty) {
+                return const Center(
+                  child: Text('No sessions available for this day.'),
+                );
+              }
+              return SessionsList(
+                sessions: sessions,
+                conference: conference,
+                day: day,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

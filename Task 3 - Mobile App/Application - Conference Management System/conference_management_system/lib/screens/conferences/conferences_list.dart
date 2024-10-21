@@ -15,7 +15,13 @@ class _ConferencesListState extends State<ConferencesList> {
   Widget build(BuildContext context) {
     final conferences = Provider.of<List<Conference>?>(context);
 
-    if (conferences == null || conferences.isEmpty) {
+    // Display a loading indicator while data is being fetched
+    if (conferences == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    // Display a message if there are no conferences available
+    if (conferences.isEmpty) {
       return const Center(
         child: Text('No conferences available'),
       );
@@ -27,7 +33,10 @@ class _ConferencesListState extends State<ConferencesList> {
     return ListView.builder(
       itemCount: conferences.length,
       itemBuilder: (context, index) {
-        return ConferenceTile(conference: conferences[index]);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          child: ConferenceTile(conference: conferences[index]),
+        );
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'package:conference_management_system/models/user.dart';
-import 'package:conference_management_system/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -16,47 +15,48 @@ class AuthService {
   Future<AppUser?> signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return _userFromFirebaseUser(user);
+      return _userFromFirebaseUser(result.user);
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
 
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future<AppUser?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      User? user = result.user;
-      return _userFromFirebaseUser(user);
+      return _userFromFirebaseUser(result.user);
     } catch (e) {
-      print(e.toString());
-      return null;
+      return null; // Consider returning specific error messages
     }
   }
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future<AppUser?> registerWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      User? user = result.user;
+      AppUser? user = _userFromFirebaseUser(result.user);
 
-      // await DatabaseService(uid: user!.uid).addUserFavoritePaper('Paper title');
+      // If you want to save additional user data to Firestore after registration
+      if (user != null) {
+        await _createUserInDatabase(
+            user.id); // Call to method that creates a user in the database
+      }
 
-      return _userFromFirebaseUser(user);
+      return user;
     } catch (e) {
-      print(e.toString());
-      return null;
+      return null; // Consider returning specific error messages
     }
   }
 
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  Future<void> _createUserInDatabase(String uid) async {
+    // Example of adding user data to Firestore
+    // await DatabaseService(uid: uid).addUserData({ 'favoritePapers': [] });
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }

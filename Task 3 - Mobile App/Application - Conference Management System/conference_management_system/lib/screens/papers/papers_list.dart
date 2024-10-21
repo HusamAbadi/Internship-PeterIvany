@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 
 class PapersList extends StatelessWidget {
   final List<Paper> papers;
+
   const PapersList({super.key, required this.papers});
 
   @override
   Widget build(BuildContext context) {
-    papers.sort((a, b) => a.title.compareTo(b.title));
+    // Sort papers by title
+    final sortedPapers = List<Paper>.from(papers)
+      ..sort((a, b) => a.title.compareTo(b.title));
+
     return ListView.builder(
-      itemCount: papers.length,
+      itemCount: sortedPapers.length,
       itemBuilder: (context, index) {
-        final paper = papers[index];
+        final paper = sortedPapers[index];
         return PaperTile(paper: paper);
       },
     );

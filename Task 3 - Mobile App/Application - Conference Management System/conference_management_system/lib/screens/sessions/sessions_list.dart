@@ -3,7 +3,6 @@ import 'package:conference_management_system/models/day.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/screens/sessions/session_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SessionsList extends StatelessWidget {
   final Day? day;
@@ -19,18 +18,19 @@ class SessionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If sessions are null or empty, show a message
-    if (sessions == null || sessions.isEmpty) {
+    // Show a message if sessions are empty
+    if (sessions.isEmpty) {
       return const Center(child: Text('No sessions available for this day.'));
     }
 
     // Sort sessions by start time
-    sessions.sort((a, b) => a.startTime.compareTo(b.startTime));
+    List<Session> sortedSessions = List.from(sessions)
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
 
     return ListView.builder(
-      itemCount: sessions.length,
+      itemCount: sortedSessions.length,
       itemBuilder: (context, index) {
-        final session = sessions[index];
+        final session = sortedSessions[index];
         return SessionTile(conference: conference, session: session);
       },
     );

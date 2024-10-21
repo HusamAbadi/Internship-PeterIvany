@@ -10,18 +10,21 @@ class AuthorsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final authors = Provider.of<List<Person>?>(context);
 
-    if (authors == null || authors.isEmpty) {
+    if (authors == null) {
       return const Center(
-        child: Text("No authors found"),
-      );
+          child: CircularProgressIndicator()); // Loading indicator
+    }
+
+    if (authors.isEmpty) {
+      return const Center(child: Text("No authors found"));
     }
 
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4, // Number of tiles per row
+        crossAxisCount: 3, // Number of tiles per row
         crossAxisSpacing: 0.0, // Space between columns
         mainAxisSpacing: 5.0, // Space between rows
-        childAspectRatio: 1.4, // Increase the width of each tile
+        childAspectRatio: 1.5, // Increase the width of each tile
       ),
       itemCount: authors.length,
       itemBuilder: (context, index) {

@@ -7,7 +7,10 @@ import 'package:conference_management_system/models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase with error handling
   await Firebase.initializeApp();
+
   runApp(const MainApp());
 }
 
@@ -16,12 +19,22 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Instantiate AuthService outside for better clarity
+    final AuthService authService = AuthService();
+
     return StreamProvider<AppUser?>.value(
-      value: AuthService().userStream,
+      value: authService.userStream,
       initialData: null,
       child: MaterialApp(
-        home: Wrapper(),
-        //* Now we can use the AppUser Data whenever we get some within the Wrapper widget and all which within it
+        title: 'Conference Management System',
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          // Define other theme properties here
+        ),
+        home: const Wrapper(),
+        debugShowCheckedModeBanner:
+            false, // Hides the debug banner in release mode
       ),
     );
   }

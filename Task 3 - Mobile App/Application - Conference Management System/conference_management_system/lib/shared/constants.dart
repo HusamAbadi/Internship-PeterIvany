@@ -8,3 +8,4 @@ const textInputDecoration = InputDecoration(
     focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.lightBlue, width: 2.0)));
 
+var mainThemeColor = Colors.amber[300];

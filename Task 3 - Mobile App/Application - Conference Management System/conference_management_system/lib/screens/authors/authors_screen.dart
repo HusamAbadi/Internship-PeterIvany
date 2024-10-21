@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthorsScreen extends StatelessWidget {
+  const AuthorsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber[100],
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        title: const Text('Authors List'), // More descriptive title
         backgroundColor: Colors.amber[400],
       ),
       body: FutureProvider<List<Person>?>(
-        // Provider for authors
         create: (context) => DatabaseService(uid: 'uid').fetchAllAuthors(),
         initialData: null,
         child: const Column(

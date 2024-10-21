@@ -4,9 +4,7 @@ import 'package:conference_management_system/models/day.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/models/paper.dart';
-import 'package:conference_management_system/models/user.dart';
 import 'package:conference_management_system/models/keyword.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
   final String uid;
@@ -49,7 +47,7 @@ class DatabaseService {
     return personsCollection.doc(uid).snapshots();
   }
 
-  //* conference list from snapshot
+  //* Conference list from snapshot
   List<Conference> _conferenceListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Conference.fromFirestore(doc);
@@ -77,8 +75,6 @@ class DatabaseService {
   }
 
   //* Sessions Stream
-  // Add this method to fetch sessions using a Future
-  // Fetch sessions for a specific day
   Future<List<Session>> fetchSessions(String conferenceId, String dayId) async {
     try {
       QuerySnapshot snapshot = await conferencesCollection
@@ -89,43 +85,36 @@ class DatabaseService {
           .get();
 
       if (snapshot.docs.isEmpty) {
-        print(
-            'No sessions found for dayId: $dayId in conferenceId: $conferenceId');
         return [];
       }
 
       return snapshot.docs.map((doc) => Session.fromFirestore(doc)).toList();
     } catch (e) {
-      print('Error fetching sessions: $e');
       return [];
     }
   }
 
-  // Fetch papers based on their document IDs
   Future<List<Paper>> fetchPapers(List<String> paperIds) async {
-    List<Paper> papers = [];
     try {
-      for (var paperId in paperIds) {
-        DocumentSnapshot doc = await papersCollection.doc(paperId).get();
-        papers.add(Paper.fromFirestore(doc));
-      }
+      List<Future<Paper>> futures = paperIds.map((paperId) {
+        return papersCollection
+            .doc(paperId)
+            .get()
+            .then((doc) => Paper.fromFirestore(doc));
+      }).toList();
+
+      return await Future.wait(futures);
     } catch (e) {
-      print('Error fetching papers: $e');
+      return [];
     }
-    return papers;
   }
 
   Future<List<Paper>> fetchPapersByAuthor(String authorId) async {
     List<Paper> papers = [];
-
-    // Query the papers collection where the authors array contains the given authorId
     QuerySnapshot querySnapshot =
         await papersCollection.where('authors', arrayContains: authorId).get();
 
-    // Loop through each document and convert it into a Paper object
-    for (var doc in querySnapshot.docs) {
-      papers.add(Paper.fromFirestore(doc));
-    }
+    papers = querySnapshot.docs.map((doc) => Paper.fromFirestore(doc)).toList();
 
     return papers;
   }
@@ -133,93 +122,79 @@ class DatabaseService {
   Future<List<Paper>> fetchPapersByKeyword(String keywordId) async {
     List<Paper> papers = [];
 
-    // Query the papers collection where the authors array contains the given authorId
     QuerySnapshot querySnapshot = await papersCollection
         .where('keywords', arrayContains: keywordId)
         .get();
 
-    // Loop through each document and convert it into a Paper object
-    for (var doc in querySnapshot.docs) {
-      papers.add(Paper.fromFirestore(doc));
-    }
+    papers = querySnapshot.docs.map((doc) => Paper.fromFirestore(doc)).toList();
 
     return papers;
   }
 
   Future<List<Person>> fetchAuthorsByPaper(List<String> personIds) async {
-    List<Person> persons = [];
     try {
-      for (var personId in personIds) {
-        DocumentSnapshot doc = await personsCollection.doc(personId).get();
-        persons.add(Person.fromFirestore(doc));
-      }
+      List<Future<Person>> futures = personIds.map((personId) {
+        return personsCollection
+            .doc(personId)
+            .get()
+            .then((doc) => Person.fromFirestore(doc));
+      }).toList();
+
+      return await Future.wait(futures);
     } catch (e) {
-      print('Error fetching Authors: $e');
+      return [];
     }
-    return persons;
   }
 
   Future<List<Person>> fetchAllAuthors() async {
-    try {
-      QuerySnapshot snapshot = await personsCollection.get();
-      if (snapshot.docs.isEmpty) {
-        return [];
-      }
-
-      return snapshot.docs.map((doc) => Person.fromFirestore(doc)).toList();
-    } catch (e) {
-      print('Error fetching sessions: $e');
-      return [];
-    }
+    return await fetchDocuments<Person>(
+        personsCollection, Person.fromFirestore);
   }
 
-  Future<List<Keyword>> fetchKeywords(List<String> keywordsIds) async {
-    List<Keyword> keywords = [];
+  Future<List<Keyword>> fetchKeywords(List<String> keywordIds) async {
     try {
-      for (var keywordId in keywordsIds) {
-        DocumentSnapshot doc = await keywordsCollection.doc(keywordId).get();
-        keywords.add(Keyword.fromFirestore(doc));
-      }
+      List<Future<Keyword>> futures = keywordIds.map((keywordId) {
+        return keywordsCollection
+            .doc(keywordId)
+            .get()
+            .then((doc) => Keyword.fromFirestore(doc));
+      }).toList();
+
+      return await Future.wait(futures);
     } catch (e) {
-      print('Error fetching Authors: $e');
       return [];
     }
-    return keywords;
   }
 
   Future<List<Keyword>> fetchAllKeywords() async {
+    return await fetchDocuments<Keyword>(
+        keywordsCollection, Keyword.fromFirestore);
+  }
+
+  //* Generic Fetch Method
+  Future<List<T>> fetchDocuments<T>(CollectionReference collection,
+      T Function(DocumentSnapshot doc) fromFirestore) async {
     try {
-      QuerySnapshot snapshot = await keywordsCollection.get();
-      if (snapshot.docs.isEmpty) {
-        return [];
-      }
-      return snapshot.docs.map((doc) => Keyword.fromFirestore(doc)).toList();
+      QuerySnapshot snapshot = await collection.get();
+      return snapshot.docs.map((doc) => fromFirestore(doc)).toList();
     } catch (e) {
-      print('Error fetching sessions: $e');
       return [];
     }
   }
+
   //* Fetch Methods for New Models
-
   Future<List<Person>> fetchChairPersons(List<String> chairPersonsIds) async {
-    List<Person> persons = [];
     try {
-      for (var chairPersonId in chairPersonsIds) {
-        DocumentSnapshot doc = await personsCollection.doc(chairPersonId).get();
-        persons.add(Person.fromFirestore(doc));
-      }
+      List<Future<Person>> futures = chairPersonsIds.map((chairPersonId) {
+        return personsCollection
+            .doc(chairPersonId)
+            .get()
+            .then((doc) => Person.fromFirestore(doc));
+      }).toList();
+
+      return await Future.wait(futures);
     } catch (e) {
-      print('Error fetching chairPersons: $e');
+      return [];
     }
-    return persons;
   }
-
-  // Future<AppUser> fetchUser(String userId) async {
-  //   DocumentSnapshot doc = await usersCollection.doc(userId).get();
-  //   return AppUser.fromFirestore(doc);
-  // }
-
-  // Future<void> addUserFavoritePaper(String paperId) async {
-  //   // implementation to add a favorite paper to the user's data in Firestore
-  // }
 }

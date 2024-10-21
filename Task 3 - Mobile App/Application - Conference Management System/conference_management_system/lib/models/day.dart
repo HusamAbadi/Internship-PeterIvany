@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'session.dart';
 
 class Day {
   final String id;
@@ -14,7 +13,7 @@ class Day {
     required this.sessions,
   });
 
-  // Factory method to create a Day object from Firestore
+  // Factory method to create a Day object from Firestore document
   factory Day.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Day(

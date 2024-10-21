@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 class ConferenceTile extends StatelessWidget {
   final Conference conference;
 
-  ConferenceTile({required this.conference});
+  const ConferenceTile({super.key, required this.conference});
 
   @override
   Widget build(BuildContext context) {
-    // Use DateFormat to format the start and end dates
+    // Format the start and end dates
     String formattedStartDate =
         DateFormat('EEEE, yyyy-MM-dd').format(conference.startDate);
     String formattedEndDate =
@@ -19,43 +19,44 @@ class ConferenceTile extends StatelessWidget {
     // Get the current date and time
     DateTime now = DateTime.now();
 
-    // Determine the status of the conference based on the current date and time
+    // Determine the status of the conference
     Color circleColor;
     if (now.isBefore(conference.startDate)) {
-      // Conference is upcoming
-      circleColor = Colors.orange;
+      circleColor = Colors.orange; // Upcoming
     } else if (now.isAfter(conference.endDate)) {
-      // Conference has ended
-      circleColor = Colors.red;
+      circleColor = Colors.red; // Ended
     } else {
-      // Conference is currently running
-      circleColor = Colors.green;
+      circleColor = Colors.green; // Ongoing
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: Card(
-        margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        elevation: 4, // Adds a slight shadow for depth
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: circleColor, // Set the color based on the status
+            backgroundColor: circleColor,
           ),
-          title: Center(child: Text(conference.name)), // Center title
+          title: Text(
+            conference.name,
+            textAlign: TextAlign.center, // Center title
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           subtitle: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // Center align the subtitle
-            mainAxisSize: MainAxisSize.min, // Minimize size to fit content
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(conference.location),
-              SizedBox(height: 4), // Adds some space between lines
-              Text('Start: $formattedStartDate'), // Display date with time
-              Text('End: $formattedEndDate'), // Display date with time
+              Text(
+                conference.location,
+                style: const TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 4), // Space between lines
+              Text('Start: $formattedStartDate'),
+              Text('End: $formattedEndDate'),
             ],
           ),
-          // When the tile is tapped, navigate to the DaysScreen
           onTap: () {
-            print(conference.id);
             Navigator.push(
               context,
               MaterialPageRoute(

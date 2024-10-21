@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class DaysScreen extends StatelessWidget {
   final Conference conference;
 
-  const DaysScreen({Key? key, required this.conference}) : super(key: key);
+  const DaysScreen({super.key, required this.conference});
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +20,28 @@ class DaysScreen extends StatelessWidget {
         backgroundColor: Colors.amber[100],
         appBar: AppBar(
           backgroundColor: Colors.amber[400],
-          title: Text(conference.name),
+          title: Text(
+            conference.name,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        body: Column(
-          children: [
-            const SizedBox(height: 50.0),
-            const Center(
-              child: Text(
-                "Days",
-                style: TextStyle(fontSize: 24),
+        body: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 20.0),
+              const Center(
+                child: Text(
+                  "Days",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(height: 40.0),
-            Expanded(
-              child: DaysList(
-                  conference:
-                      conference), // Pass the conferenceId to the DaysList
-            ),
-          ],
+              const SizedBox(height: 30.0),
+              Expanded(
+                child: DaysList(
+                    conference: conference), // Pass the conference to DaysList
+              ),
+            ],
+          ),
         ),
       ),
     );
