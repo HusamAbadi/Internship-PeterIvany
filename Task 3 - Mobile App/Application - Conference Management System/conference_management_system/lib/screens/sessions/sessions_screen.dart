@@ -3,17 +3,20 @@ import 'package:conference_management_system/models/day.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/screens/sessions/sessions_list.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SessionsScreen extends StatelessWidget {
   final Day day;
   final Conference conference;
+  final int dayIncrement;
 
   const SessionsScreen({
     super.key,
     required this.day,
     required this.conference,
+    required this.dayIncrement,
   });
 
   @override
@@ -25,10 +28,11 @@ class SessionsScreen extends StatelessWidget {
       ),
       initialData: null,
       child: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: bodyBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.amber[400],
-          title: Text(conference.name),
+          backgroundColor: appBarColor,
+          titleTextStyle: titleFontStyle,
+          title: const Text("Back to Days Screen"),
         ),
         body: _buildBody(context),
       ),
@@ -39,12 +43,15 @@ class SessionsScreen extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 50.0),
-        const Center(
+        Center(
           child: Text(
-            "Sessions",
-            style: TextStyle(fontSize: 24),
+            conference.name,
+            style: titleFontStyle.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
+        Text("Day ${dayIncrement.toString()}",
+            style:
+                const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
         const SizedBox(height: 40.0),
         Expanded(
           child: Consumer<List<Session>?>(
@@ -61,6 +68,7 @@ class SessionsScreen extends StatelessWidget {
                 sessions: sessions,
                 conference: conference,
                 day: day,
+                dayIncrement: dayIncrement,
               );
             },
           ),

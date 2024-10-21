@@ -2,6 +2,7 @@ import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/models/day.dart';
 import 'package:conference_management_system/screens/days/days_list.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,22 +18,22 @@ class DaysScreen extends StatelessWidget {
           .daysStream(conference.id), // Provide conference ID
       initialData: null,
       child: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: bodyBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.amber[400],
-          title: Text(
-            conference.name,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          backgroundColor: appBarColor,
+          title: const Text(
+            "Back to Conferences Screen",
           ),
+          titleTextStyle: titleFontStyle,
         ),
         body: SafeArea(
           child: Column(
             children: [
               const SizedBox(height: 20.0),
-              const Center(
+              Center(
                 child: Text(
-                  "Days",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  conference.name,
+                  style: titleFontStyle.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 30.0),

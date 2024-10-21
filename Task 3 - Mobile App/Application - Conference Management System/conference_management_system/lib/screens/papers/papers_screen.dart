@@ -5,6 +5,7 @@ import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/models/session.dart';
 import 'package:conference_management_system/screens/papers/papers_list.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +14,16 @@ class PapersScreen extends StatelessWidget {
   final Conference? conference;
   final Person? author;
   final Keyword? keyword;
+  final int? dayIncrement;
+  final int? sessionIncrement;
 
   // Constructor for SessionTile navigation
   const PapersScreen.session({
     super.key,
     required this.session,
     required this.conference,
+    this.dayIncrement,
+    this.sessionIncrement,
   })  : author = null,
         keyword = null;
 
@@ -28,7 +33,9 @@ class PapersScreen extends StatelessWidget {
     required this.author,
   })  : session = null,
         conference = null,
-        keyword = null;
+        keyword = null,
+        dayIncrement = null,
+        sessionIncrement = null;
 
   // Constructor for KeywordsTile navigation
   const PapersScreen.keyword({
@@ -36,7 +43,9 @@ class PapersScreen extends StatelessWidget {
     required this.keyword,
   })  : session = null,
         conference = null,
-        author = null;
+        author = null,
+        dayIncrement = null,
+        sessionIncrement = null;
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +61,28 @@ class PapersScreen extends StatelessWidget {
 
   Widget _buildSessionPapersScreen() {
     return _buildPapersScreen(
-      title: "Papers for ${session!.title}",
+      appBarTitle: "Back to Sessions Screen",
+      title: "${conference?.name}",
       fetchPapers: () =>
           DatabaseService(uid: 'uid').fetchPapers(session!.papers),
-      appBarTitle: conference!.name,
     );
   }
 
   Widget _buildAuthorPapersScreen() {
     return _buildPapersScreen(
+      appBarTitle: "Back to Authors Screen",
       title: "Papers by ${author!.name}",
       fetchPapers: () =>
           DatabaseService(uid: 'uid').fetchPapersByAuthor(author!.id),
-      appBarTitle: "Papers by ${author!.name}",
     );
   }
 
   Widget _buildKeywordPapersScreen() {
     return _buildPapersScreen(
-      title: "Papers by ${keyword!.name} keyword",
+      appBarTitle: 'Back to Keywords Screen',
+      title: "${keyword!.name} keyword",
       fetchPapers: () =>
           DatabaseService(uid: 'uid').fetchPapersByKeyword(keyword!.id),
-      appBarTitle: 'Papers by ${keyword!.name}',
     );
   }
 
@@ -86,10 +95,11 @@ class PapersScreen extends StatelessWidget {
       create: (context) => fetchPapers(),
       initialData: null,
       child: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: bodyBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.amber[400],
+          backgroundColor: appBarColor,
           title: Text(appBarTitle),
+          titleTextStyle: titleFontStyle,
         ),
         body: Column(
           children: [
@@ -97,7 +107,7 @@ class PapersScreen extends StatelessWidget {
             Center(
               child: Text(
                 title,
-                style: const TextStyle(fontSize: 24),
+                style: titleFontStyle.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             ),

@@ -7,13 +7,13 @@ import 'package:intl/intl.dart';
 class DayTile extends StatelessWidget {
   final Day day;
   final Conference conference;
-  final int increment;
+  final int dayIncrement;
 
   const DayTile({
     super.key,
     required this.day,
     required this.conference,
-    required this.increment,
+    required this.dayIncrement,
   });
 
   @override
@@ -31,7 +31,7 @@ class DayTile extends StatelessWidget {
             backgroundColor: circleColor, // Set the color based on the status
           ),
           title: Text(
-            'Day $increment: ${DateFormat('EEEE, dd-MM-yyyy').format(day.date)}',
+            'Day $dayIncrement: ${DateFormat('EEEE, dd-MM-yyyy').format(day.date)}',
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
@@ -43,9 +43,9 @@ class DayTile extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => SessionsScreen(
-                  day: day,
-                  conference: conference,
-                ),
+                    day: day,
+                    conference: conference,
+                    dayIncrement: dayIncrement),
               ),
             );
           },

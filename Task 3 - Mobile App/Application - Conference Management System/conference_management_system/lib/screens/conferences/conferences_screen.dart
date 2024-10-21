@@ -1,6 +1,7 @@
 import 'package:conference_management_system/models/conference.dart';
 import 'package:conference_management_system/screens/conferences/conferences_list.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +14,11 @@ class ConferencesScreen extends StatelessWidget {
       value: DatabaseService(uid: 'uid').conferences,
       initialData: null,
       child: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: bodyBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.amber[400],
-          title: const Text('Home Screen'),
+          backgroundColor: appBarColor,
+          title: const Text('Back to Home Screen'),
+          titleTextStyle: titleFontStyle,
         ),
         body: const ConferencesBody(),
       ),
@@ -41,17 +43,17 @@ class ConferencesBody extends StatelessWidget {
       return const Center(child: Text("No conferences available."));
     }
 
-    return const Column(
+    return Column(
       children: [
-        SizedBox(height: 50.0),
+        const SizedBox(height: 50.0),
         Center(
           child: Text(
             'Conferences',
-            style: TextStyle(fontSize: 24),
+            style: titleFontStyle.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(height: 40.0),
-        Expanded(
+        const SizedBox(height: 40.0),
+        const Expanded(
           child: ConferencesList(),
         ),
       ],

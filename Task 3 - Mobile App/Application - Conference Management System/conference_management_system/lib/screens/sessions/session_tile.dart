@@ -10,11 +10,14 @@ import 'package:provider/provider.dart';
 class SessionTile extends StatelessWidget {
   final Conference conference;
   final Session session;
+  final int dayIncrement;
+  final int sessionIncrement;
 
   const SessionTile({
     super.key,
     required this.session,
     required this.conference,
+    required this.sessionIncrement, required this.dayIncrement,
   });
 
   @override
@@ -49,7 +52,10 @@ class SessionTile extends StatelessWidget {
                 backgroundColor:
                     circleColor, // Set the color based on the status
               ),
-              title: Text(session.title),
+              title: Text(
+                "Session $sessionIncrement: \n ${session.title}",
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,9 +88,10 @@ class SessionTile extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PapersScreen.session(
-                      session: session,
-                      conference: conference,
-                    ),
+                        session: session,
+                        conference: conference,
+                        dayIncrement: dayIncrement,
+                        sessionIncrement: sessionIncrement),
                   ),
                 );
               },

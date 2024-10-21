@@ -1,6 +1,7 @@
 import 'package:conference_management_system/models/keyword.dart';
 import 'package:conference_management_system/screens/keywords/keywords_list.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,10 +11,11 @@ class KeywordsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[100],
+      backgroundColor: bodyBackgroundColor,
       appBar: AppBar(
-        title: const Text("Keywords Screen"),
-        backgroundColor: Colors.amber[400],
+        title: const Text("Back to Home Screen"),
+        backgroundColor: appBarColor,
+        titleTextStyle: titleFontStyle,
       ),
       body: FutureProvider<List<Keyword>?>(
         // Provider for keywords
@@ -26,17 +28,17 @@ class KeywordsScreen extends StatelessWidget {
           }
         },
         initialData: null,
-        child: const Column(
+        child: Column(
           children: [
-            SizedBox(height: 50.0),
+            const SizedBox(height: 50.0),
             Center(
               child: Text(
                 'Keywords',
-                style: TextStyle(fontSize: 24),
+                style: titleFontStyle.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 40.0),
-            Expanded(
+            const SizedBox(height: 40.0),
+            const Expanded(
               child: KeywordsList(),
             ),
           ],

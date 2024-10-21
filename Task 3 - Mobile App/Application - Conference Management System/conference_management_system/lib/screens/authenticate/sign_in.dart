@@ -26,9 +26,9 @@ class _SignInState extends State<SignIn> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.amber[100],
+            backgroundColor: bodyBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.amber[400],
+              backgroundColor: appBarColor,
               elevation: 0.0,
               title: const Text('Sign in to the system'),
               actions: <Widget>[

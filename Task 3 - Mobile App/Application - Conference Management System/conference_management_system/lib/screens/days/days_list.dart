@@ -33,7 +33,7 @@ class DaysList extends StatelessWidget {
         return DayTile(
           day: days[index],
           conference: conference!,
-          increment: index + 1, // Increment based on index
+          dayIncrement: index + 1, // Increment based on index
         );
       },
     );

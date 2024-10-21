@@ -2,6 +2,7 @@ import 'package:conference_management_system/screens/conferences/conferences_scr
 import 'package:conference_management_system/screens/authors/authors_screen.dart';
 import 'package:conference_management_system/screens/keywords/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -20,11 +21,11 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.amber[100],
+        backgroundColor: bodyBackgroundColor,
         appBar: AppBar(
           title: const Text("Home Screen"),
-          titleTextStyle: const TextStyle(fontSize: 16, color: Colors.black),
-          backgroundColor: Colors.amber[300],
+          titleTextStyle: titleFontStyle,
+          backgroundColor: appBarColor,
           elevation: 0.0,
           actions: <Widget>[
             TextButton.icon(

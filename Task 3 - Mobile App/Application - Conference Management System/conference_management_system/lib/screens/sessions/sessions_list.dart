@@ -8,12 +8,14 @@ class SessionsList extends StatelessWidget {
   final Day? day;
   final Conference conference;
   final List<Session> sessions;
+  final int dayIncrement;
 
   const SessionsList({
     super.key,
     this.day,
     required this.conference,
     required this.sessions,
+    required this.dayIncrement,
   });
 
   @override
@@ -31,7 +33,12 @@ class SessionsList extends StatelessWidget {
       itemCount: sortedSessions.length,
       itemBuilder: (context, index) {
         final session = sortedSessions[index];
-        return SessionTile(conference: conference, session: session);
+        return SessionTile(
+          conference: conference,
+          session: session,
+          dayIncrement: dayIncrement,
+          sessionIncrement: index + 1,
+        );
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:conference_management_system/models/keyword.dart';
 import 'package:conference_management_system/models/paper.dart';
 import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/services/database.dart';
+import 'package:conference_management_system/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +24,11 @@ class PaperDetails extends StatelessWidget {
             DatabaseService(uid: 'uid').fetchKeywords(paper.keywords),
         initialData: null,
         child: Scaffold(
-          backgroundColor: Colors.amber[100],
+          backgroundColor: bodyBackgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.amber[300],
-            title: const Text("Paper Details"),
+            backgroundColor: appBarColor,
+            title: const Text("Back"),
+            titleTextStyle: titleFontStyle,
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -45,12 +47,13 @@ class PaperDetails extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Abstract
+                _buildAbstractSection(),
+                SizedBox(height: 20.0),
                 // Authors
                 _buildAuthorsSection(context),
                 // Keywords
                 _buildKeywordsSection(context),
-                // Abstract
-                _buildAbstractSection(),
               ],
             ),
           ),
