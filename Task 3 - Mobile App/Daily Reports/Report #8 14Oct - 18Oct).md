@@ -16,4 +16,30 @@ Tasks Completed:
         -Explored the use of DocumentSnapshot and QuerySnapshot in Firestore to map data from Firestore to Dart models (e.g., converting Firestore Timestamp to DateTime).
         -Applied this knowledge to build efficient and responsive data-driven components in Flutter, improving the overall performance of the application.
 
-# Day 49 (Octoper 17th):
+# Days 49-50 (17th - 18th Octoper):
+    Objectives:
+        -Enhance the PapersScreen widget to allow for flexible instantiation with different parameters.
+        -Implement multiple constructor methods to access the PapersScreen from various parts of the application.
+
+    Tasks Completed:
+        -Analyzed Current PapersScreen Implementation:
+            --Reviewed the existing implementation of the PapersScreen widget to understand its data flow and dependencies on the Session and Conference models.
+
+        -Implemented Named Constructors:
+            --Introduced multiple constructors in the PapersScreen class:
+                ---Default Constructor: Accepts session, conference, and papers as optional parameters.
+                ---Named Constructor (fromSession): Allows initialization using a Session and a Conference object. This constructor fetches papers based on the provided session.
+                ---Named Constructor (fromPapers): Initializes the screen using a direct list of Paper objects. This approach avoids fetching data again when it is already available.
+
+        -Updated Data Fetching Logic:
+            -Modified the FutureProvider to handle two scenarios:
+                --Directly returning the provided papers when using fromPapers.
+                --Fetching papers from the database using the session when using fromSession.
+        
+        -UI Adjustments:
+            --Ensured the title in the AppBar uses the conference name if available.
+            --Updated the body text to reflect the title of the session or a default message when the session is not provided.
+
+        -Testing and Validation:
+            --Conducted testing to validate that both constructors work as expected.
+            --Ensured proper loading indicators and messages display when data is being fetched or if no papers are available.
