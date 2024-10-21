@@ -6,6 +6,7 @@ import 'package:conference_management_system/models/person.dart';
 import 'package:conference_management_system/models/paper.dart';
 import 'package:conference_management_system/models/user.dart';
 import 'package:conference_management_system/models/keyword.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseService {
   final String uid;
@@ -114,6 +115,21 @@ class DatabaseService {
     return papers;
   }
 
+  Future<List<Paper>> fetchPapersByAuthor(String authorId) async {
+    List<Paper> papers = [];
+
+    // Query the papers collection where the authors array contains the given authorId
+    QuerySnapshot querySnapshot =
+        await papersCollection.where('authors', arrayContains: authorId).get();
+
+    // Loop through each document and convert it into a Paper object
+    for (var doc in querySnapshot.docs) {
+      papers.add(Paper.fromFirestore(doc));
+    }
+
+    return papers;
+  }
+
   Future<List<Person>> fetchAuthors(List<String> personIds) async {
     List<Person> persons = [];
     try {
@@ -127,23 +143,27 @@ class DatabaseService {
     return persons;
   }
 
-  Future<List<Session>> fetchAllAuthors(
-      String conferenceId, String dayId) async {
+  Future<List<Keyword>> fetchKeywords(List<String> keywordsIds) async {
+    List<Keyword> keywords = [];
     try {
-      QuerySnapshot snapshot = await personsCollection
-          .doc(conferenceId)
-          .collection('days')
-          .doc(dayId)
-          .collection('sessions')
-          .get();
+      for (var keywordId in keywordsIds) {
+        DocumentSnapshot doc = await keywordsCollection.doc(keywordId).get();
+        keywords.add(Keyword.fromFirestore(doc));
+      }
+    } catch (e) {
+      print('Error fetching Authors: $e');
+    }
+    return keywords;
+  }
 
+  Future<List<Person>> fetchAllAuthors() async {
+    try {
+      QuerySnapshot snapshot = await personsCollection.get();
       if (snapshot.docs.isEmpty) {
-        print(
-            'No sessions found for dayId: $dayId in conferenceId: $conferenceId');
         return [];
       }
 
-      return snapshot.docs.map((doc) => Session.fromFirestore(doc)).toList();
+      return snapshot.docs.map((doc) => Person.fromFirestore(doc)).toList();
     } catch (e) {
       print('Error fetching sessions: $e');
       return [];
@@ -168,11 +188,6 @@ class DatabaseService {
   Future<AppUser> fetchUser(String userId) async {
     DocumentSnapshot doc = await usersCollection.doc(userId).get();
     return AppUser.fromFirestore(doc);
-  }
-
-  Future<Keyword> fetchKeyword(String keywordId) async {
-    DocumentSnapshot doc = await keywordsCollection.doc(keywordId).get();
-    return Keyword.fromFirestore(doc);
   }
 
   Future<void> addUserFavoritePaper(String paperId) async {

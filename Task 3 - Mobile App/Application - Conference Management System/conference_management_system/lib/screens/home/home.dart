@@ -1,5 +1,5 @@
 import 'package:conference_management_system/screens/conferences/conferences_screen.dart';
-import 'package:conference_management_system/screens/home/authors_screen.dart';
+import 'package:conference_management_system/screens/authors/authors_screen.dart';
 import 'package:conference_management_system/screens/home/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.amber[100],
         appBar: AppBar(
           title: Text("Conference Management System"),
-          titleTextStyle: TextStyle(fontSize: 16),
+          titleTextStyle: TextStyle(fontSize: 16, color: Colors.black),
           backgroundColor: Colors.amber[400],
           elevation: 0.0,
           actions: <Widget>[

@@ -55,6 +55,7 @@ class SessionTile extends StatelessWidget {
                   subtitle: Column(
                     children: [
                       Text('$formattedStartTime - $formattedEndTime'),
+                      Text(session.location),
                       SizedBox(
                         height: session.chairPersons.length * 20,
                         child: Consumer<List<Person>?>(
@@ -87,7 +88,10 @@ class SessionTile extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PapersScreen(session: session),
+                        builder: (context) => PapersScreen.session(
+                          session: session,
+                          conference: conference,
+                        ),
                       ),
                     );
                   },

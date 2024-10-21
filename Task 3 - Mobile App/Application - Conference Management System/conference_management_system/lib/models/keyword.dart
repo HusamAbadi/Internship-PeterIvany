@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Keyword {
   final String id;
   final String name;
-  final List<DocumentReference>
-      papers; // References to papers related to this keyword
+  final List<String> papers; // References to papers related to this keyword
 
   Keyword({
     required this.id,
@@ -18,7 +17,7 @@ class Keyword {
     return Keyword(
       id: doc.id,
       name: data['name'] ?? '',
-      papers: List<DocumentReference>.from(data['papers'] ?? []),
+      papers: List<String>.from(data['papers'] ?? []),
     );
   }
 }
