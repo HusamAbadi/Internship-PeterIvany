@@ -14,7 +14,7 @@ class PaperDetails extends StatelessWidget {
     return FutureProvider<List<Person>?>(
       // Provider for authors
       create: (context) =>
-          DatabaseService(uid: 'uid').fetchAuthors(paper.authors),
+          DatabaseService(uid: 'uid').fetchAuthorsByPaper(paper.authors),
       initialData: null,
       child: FutureProvider<List<Keyword>?>(
         // Provider for keywords

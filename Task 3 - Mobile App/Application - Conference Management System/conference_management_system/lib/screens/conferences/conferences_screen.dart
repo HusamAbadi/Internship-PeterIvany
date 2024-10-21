@@ -16,14 +16,14 @@ class ConferencesScreen extends StatelessWidget {
           backgroundColor: Colors.amber[100],
           appBar: AppBar(
             backgroundColor: Colors.amber[400],
-            title: const Text('Conferences'),
+            title: const Text('Home Screen'),
           ),
           body: const Column(
             children: [
               SizedBox(height: 50.0),
               Center(
                 child: Text(
-                  'Your Conferences',
+                  'Conferences',
                   style: TextStyle(fontSize: 24),
                 ),
               ),

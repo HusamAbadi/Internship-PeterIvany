@@ -1,6 +1,6 @@
 import 'package:conference_management_system/screens/conferences/conferences_screen.dart';
 import 'package:conference_management_system/screens/authors/authors_screen.dart';
-import 'package:conference_management_system/screens/home/keywords_screen.dart';
+import 'package:conference_management_system/screens/keywords/keywords_screen.dart';
 import 'package:conference_management_system/services/auth.dart';
 import 'package:flutter/material.dart';
 
